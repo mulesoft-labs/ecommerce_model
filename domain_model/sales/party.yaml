@@ -1,0 +1,99 @@
+#%Vocabulary 1.0
+
+vocabulary: Party
+
+base: http://schema.org/
+
+uses:
+  common: ../common.yaml
+  location: ../shipment/location.yaml
+
+  
+(area): sales
+
+classTerms:
+
+  Party:
+    description: Any party involved in a commercial transaction
+    properties:
+      - location.address
+      - common.email
+      - telephone
+      - common.name
+      - taxID
+      - vatID
+      
+  Person:
+    extends: Party
+    properties:
+      - givenName
+      - familyName
+      - gender
+      - personalTitle
+      - jobTitle
+      - age
+      
+  Organization:
+    description: An organization such as a school, NGO, corporation, club, etc.
+    extends: Party
+    properties:
+      - legalName
+      - common.url
+      - common.logo
+
+propertyTerms:
+
+  taxID:
+    description: |
+      The Tax / Fiscal ID of the organization or person, e.g. the TIN in
+      the US or the CIF/NIF in Spain.
+    extends: common.identifier
+    range: string
+
+  vatID:
+    decription: The Value-added Tax ID of the organization or person.
+    extends: common.identifier
+    range: string  
+
+  legalName:
+    extends: common.name
+    description: The official name of the organization, e.g. the registered company name.
+    range: string
+
+  givenName:
+    description: |
+      	Given name. In the U.S., the first name of a Person.
+        This can be used along with familyName instead of the name property.
+    extends: name
+    range: string
+
+  familyName:
+    description: |
+      Family name. In the U.S., the last name of an Person.
+      This can be used along with givenName instead of the name property.
+    extends: name
+    range: string
+
+  gender:
+    description: |
+      Gender of the person. While http://schema.org/Male and http://schema.org/Female may be used,
+      text strings are also acceptable for people who do not identify as a binary gender.
+    range: string
+
+  personalTitle:
+    description: |
+      The personal title of the person (mr, mrs, ms, dr).
+    range: string
+
+  jobtitle:
+    description: |
+      The job title of the person (for example, Financial Manager).
+    range: string
+
+  age:
+    range: integer
+ 
+  telephone:
+    description: The telephone number.
+    range: string
+   

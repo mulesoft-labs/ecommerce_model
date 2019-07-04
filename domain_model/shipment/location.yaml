@@ -1,0 +1,95 @@
+#%Vocabulary 1.0
+
+vocabulary: Location
+
+base: http://schema.org/
+
+uses:
+  common: ../common.yaml
+
+(area): shipment
+
+classTerms:
+
+  PostalAddress:
+    description: Mailing address
+    properties:
+      - addressCountry
+      - addressLocality
+      - addressRegion
+      - postOfficeBoxNumber
+      - postalCode
+      - streetAddress
+
+  Country:
+    description: A country
+    extends: Place
+
+  Place:
+    description: Entities that have a somewhat fixed, physical extension.
+    properties:
+      - common.name
+      - common.identifier
+      - geo
+
+  GeoCoordinates:
+    description: The geographic coordinates of a place or event.
+    properties:
+      - latitude
+      - longitude
+      - elevation
+
+  GeoShape:
+    description: |
+      The geographic shape of a place. A GeoShape can be described using
+      several properties whose values are based on latitude/longitude pairs.
+      Either whitespace or commas can be used to separate latitude and longitude;
+      whitespace should be used when writing a list of several such points.
+    properties:
+      - polygon
+      - place
+      
+propertyTerms:
+
+  address:
+    description: Physical address of the item.
+    range: PostalAddress
+    
+  addressCountry:
+    range: Country
+    
+  addressLocality:
+    range: string
+    
+  addressRegion:
+    range: string
+    
+  postOfficeBoxNumber:
+    range: string
+    
+  postalCode:
+    range: string
+    
+  streetAddress:
+    range: string
+    
+  geo:
+    description: The geo coordinates of the place.
+    range: GeoCoordinates
+    
+  latitude:
+    range: double
+    
+  longitude:
+    range: dobule
+    
+  elevation:
+    range: float
+
+  polygon:
+    description: |
+      A polygon is the area enclosed by a point-to-point path for which
+      the starting and ending points are the same. A polygon is expressed
+      as a series of four or more space delimited points where the first and
+      final points are identical.
+    range: string

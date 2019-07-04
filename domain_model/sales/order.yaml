@@ -1,0 +1,234 @@
+#%Vocabulary 1.0
+
+vocabulary: Orders
+
+base: http://schema.org/
+
+uses:
+  party: ./party.yaml
+  location: ../shipment/location.yaml
+  delivery: ../shipment/delivery.yaml
+  invoice: ../billing/invoice.yaml
+  price: ../billing/price.yaml
+  payment: ../billing/payment.yaml
+  product: ../warehouse/product.yaml
+  common: ../common.yaml
+
+(area): sales
+  
+classTerms:
+
+  Order:
+    description: |
+      An order is a confirmation of a transaction (a receipt), which can contain multiple line items,
+      each represented by an Offer that has been accepted by the customer.
+    properties:
+      - acceptedOffer
+      - billingAddress
+      - broker
+      - confirmationNumber
+      - customer
+      - price.discount
+      - price.discountCode
+      - price.discountCurrency
+      - isGift
+      - orderDate
+      - orderDelivery
+      - orderNumber
+      - orderStatus
+      - orderedItem
+      - partOfInvoice
+      - seller
+
+  Offer:
+    description: |
+      An offer to transfer some rights to an item or to provide a service — for example, an offer to sell
+      tickets to an event, to rent the DVD of a movie, to stream a TV show over the internet, to repair a
+      motorcycle, or to loan a book.
+    properties:
+      - payment.acceptedPaymentMethod
+      - addOn
+      - price.price
+      - price.priceCurrency
+      - offeredBy
+      - itemOffered
+      
+  OrderItem:
+    description: |
+      An order item is a line of an order. It includes the quantity and shipping details of a bought offer.
+    properties:
+      - orderDelivery
+      - orderItemNumber
+      - orderItemStatus
+      - orderQuantity
+      - item
+        
+
+  WarrantyPromise:
+    description: |
+      A structured value representing the duration and scope of services that will be provided
+      to a customer free of charge in case of a defect or malfunction of a product.
+    properties:
+      - durationOfWarranty
+      - warrantyScope
+    
+propertyTerms:
+
+  acceptedOffer:
+    description: The offer(s) -- e.g., product, quantity and price combinations -- included in the order.
+    range: Offer
+
+  billingAddress:
+    description: |
+      An order is a confirmation of a transaction (a receipt), which can contain multiple line items,
+      each represented by an Offer that has been accepted by the customer.
+    range: location.PostalAddress
+
+  broker:
+    description: |
+      An entity that arranges for an exchange between a buyer and a seller.
+      In most cases a broker never acquires or releases ownership of a product or
+      service involved in an exchange. If it is not clear whether an entity is a
+      broker, seller, or buyer, the latter two terms are preferred. Supersedes bookingAgent.
+    range: common.Organization
+
+  confirmationNumber:
+    description: A number that confirms the given order or payment has been received.
+    range: string
+
+  customer:
+    description: Party placing the order or paying the invoice.
+    range: party.Party
+
+
+  isGift:
+    description: Was the offer accepted as a gift for someone other than the buyer.
+    range: string
+
+  orderDate:
+    description: Date order was placed.
+    range: date
+
+  orderDelivery:
+    description: The delivery of the parcel related to this order or order item
+    range: delivery.ParcelDelivery
+
+  orderNumber:
+    description: The identifier of the transaction.
+    range: string
+
+  orderStatus:
+    description: The current status of the order.
+    range: string
+
+  orderedItem:
+    description: The item ordered.
+    range: OrderItem
+
+  partOfInvoice:
+    description: The order is being paid as part of the referenced Invoice.
+    range: invoice.Invoice
+
+  seller:
+    description: |
+      An entity which offers (sells / leases / lends / loans) the services / goods.
+      A seller may also be a provider.
+    range: party.Organization
+    
+  addOn:
+    description: |
+      	An additional offer that can only be obtained in combination with the first base offer (e.g. supplements and extensions that are available for a surcharge).
+    range: Offer
+
+  advanceBookingRequirement:
+    description: |
+      The amount of time that is required between accepting the offer and the actual usage of the resource or service.
+    range: integer
+
+  areaServed:
+    description: |
+      The geographic area where a service or offered item is provided. Supersedes serviceArea.
+    range: location.GeoShape
+
+  availability:
+    description: The availability of this item—for example In stock, Out of stock, Pre-order, etc.
+    range: string
+
+  availabilityStarts:
+    description: The beginning of the availability of the product or service included in the offer.
+    range: dateTime
+
+  availabilityEnds:
+    description: The end of the availability of the product or service included in the offer.
+    range: dateTime
+
+  availableDeliveryMethod:
+    description: The delivery method(s) available for this offer.
+    range: delivery.DeliveryMethod
+  
+  eligibleDuration:
+    description: The duration for which the given offer is valid.
+    range: integer
+
+  eligibleQuantity:
+    description: |
+      	The interval and unit of measurement of ordering quantities for
+        which the offer or price specification is valid. This allows e.g.
+        specifying that a certain freight charge is valid only for a certain quantity.
+    range: float
+
+  eligibleRegion:
+    description: |
+      The ISO 3166-1 (ISO 3166-1 alpha-2) or ISO 3166-2 code, the place, or the GeoShape
+      for the geo-political region(s) for which the offer or delivery charge specification is valid.
+    range: location.GeoShape
+
+  offeredBy:
+    description: A pointer to the organization or person making the offer.
+    range: party.Party
+    
+  itemOffered:
+    description: The item being offered
+    range: product.Product
+    
+  warranty:
+    description: |
+      The warranty promise(s) included in the offer. Supersedes warrantyPromise.
+    range: WarrantyPromise
+
+  durationOfWarranty:
+    description: |
+      The duration of the warranty promise. Common unitCode values are ANN for year,
+      MON for months, or DAY for days.
+    range: string
+
+  warrantyScope:
+    description: The scope of the warranty promise.
+    range: string
+
+  orderDelivery:
+    description: The delivery of the parcel related to this order or order item.
+    range: delivery.ParcelDelivery
+
+  orderItemNumber:
+    extends: common.identifier
+    description:  The identifier of the order item
+    range: string
+    
+  orderItemStatus:
+    extends: orderStatus
+    description: The current status of the order item.
+    range: string
+    
+  orderQuantity:
+    description: The number of the item ordered. If the property is not set, assume the quantity is one.
+    range: double
+    
+  orderedItem:
+    description: The item ordered
+    range: product.Product
+    
+
+ item:
+   description: Product added as an order item in an order
+   range: product.Product

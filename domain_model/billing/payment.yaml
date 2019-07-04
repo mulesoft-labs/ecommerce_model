@@ -1,0 +1,53 @@
+#%Vocabulary 1.0
+
+vocabulary: Payment
+
+base: http://schema.org/
+
+(area): billing
+
+uses:
+  common: ../common.yaml
+
+classTerms:
+
+  PaymentMethod:
+    description: |
+      A payment method is a standardized procedure for transferring the monetary amount
+      for a purchase. Payment methods are characterized by the legal and technical structures
+      used, and by the organization or group carrying out the transaction.
+    property:
+      - paymentMethodId
+      
+propertyTerms:
+
+  paymentMethod:
+    description: The name of the credit card or other method of payment for the order. 
+    range: PaymentMethod
+
+  paymentMethodId:
+    description: |
+      An identifier for the method of payment used (e.g. the last 4 digits of
+      the credit card).
+    extends: common.identifier
+    range: string
+
+  paymentUrl:
+    description: The URL for sending a payment.
+    extends: common.url
+    range: string
+
+  acceptedPaymentMethod:
+    description: The payment method(s) accepted by seller for this offer.
+    range: PaymentMethod
+    
+
+  paymentDueDate:
+    description: The date that payment is due
+    range: date
+    
+
+  paymentMethodId:
+    description: Identifier of the payment method
+    extends: common.identifier
+    range: string

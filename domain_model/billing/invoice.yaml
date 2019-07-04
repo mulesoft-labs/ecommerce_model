@@ -1,0 +1,38 @@
+#%Vocabulary 1.0
+
+base: http://schema.org/
+
+(area): billing
+
+uses:
+  common: ../common.yaml
+  order: ../sales/order.yaml
+  payment: ./payment.yaml
+
+classTerms:
+
+  Invoice:
+    description: A statement of the money due for goods or services; a bill.
+    properties:
+      - order.broker
+      - common.category
+      - confirmationNumber
+      - order.customer
+      - payment.paymentDueDate
+      - paymentStatus
+      - order.seller
+      - payment.paymentMethod
+      - referencesOrder
+
+
+propertyTerms:
+
+  confirmationNumber:
+    description: A number that confirms the given order or payment has been received.
+    range: string
+      
+  referencesOrder:
+    description: |
+      The Order(s) related to this Invoice. One or more Orders may be combined
+      into a single Invoice.
+    range: order.Order

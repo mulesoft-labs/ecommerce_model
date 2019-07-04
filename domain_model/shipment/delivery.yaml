@@ -1,0 +1,124 @@
+#%Vocabulary 1.0
+
+vocabulary: Delivery
+
+base: http://schema.org/
+
+(area): shipment
+
+uses:
+  location: ./location.yaml
+  product: ../warehouse/product.yaml
+  order: ../sales/order.yaml
+  party: ../sales/order.yaml
+  
+classTerms:
+
+  ParcelDelivery:
+    description: The delivery of a parcel either via the postal service or a commercial service.
+    properties:
+      - deliveryAddress
+      - deliveryStatus
+      - expectedArrivalFrom
+      - expectedArrivalUntil
+      - hasDeliveryMethod
+      - itemShipped
+      - originAddress
+      - partOfOrder
+      - provider
+      - trackingNumber
+      - trackingUrl
+
+  DeliveryMethod:
+    description: |
+      A delivery method is a standardized procedure for transferring the product or service to the destination of
+      fulfillment chosen by the customer. Delivery methods are characterized by the means of transportation used,
+      and by the organization or group that is the contracting party for the sending organization or person.
+    properties:
+      - common.name
+      - deliveryMethodId
+
+
+  DeliveryEvent:
+    description: An event involving the delivery of an item.
+    properties:
+      - common.name
+      - deliveryEventId
+      - accessCode
+      - availableFrom
+      - availableThrough
+      - hasDeliveryMethod
+
+propertyTerms:
+
+  deliveryAddress:
+    description: Destination address
+    extends: location.address
+    range: location.PostalAddress
+      
+  deliveryStatus:
+    description: |
+      New entry added as the package passes through each leg of its journey
+      (from shipment to final delivery).
+    range: DeliveryEvent
+      
+  expectedArrivalFrom:
+    description: The earliest date the package may arrive.
+    range: dateTime
+      
+  expectedArrivalUntil:
+    description: The latest date the package may arrive.
+    range: dateTime
+      
+  hasDeliveryMethod:
+    description: Method used for delivery or shipping.
+    range: DeliveryMethod
+      
+  itemShipped:
+    description: Item(s) being shipped.
+    range: product.Product
+      
+  originAddress:
+    description: Origin address
+    extends: location.address
+    range: location.Address
+      
+  partOfOrder:
+    description: The overall order the items in this delivery were included in.
+    range: order.Order
+      
+  provider:
+    description: The service provider, service operator, or service performer
+    range: party.Organization
+      
+  trackingNumber:
+    description: Shipper tracking number.
+    extends: common.identifier
+    range: string
+      
+  trackingUrl:
+    description: Tracking url for the parcel delivery.    
+    extends: common.url
+    range: string
+
+  deliveryMethodId:
+    description: identifier of the delivery method
+    extends: common.identifier
+    range: string
+    
+  accessCode:
+    description: Password, PIN, or access code needed for delivery (e.g. from a locker).
+    range: string
+      
+  availableFrom:
+    description: When the item is available for pickup from the store, locker, etc.
+    range: dateTime
+      
+  availableThrough:
+    description: After this date, the item will no longer be available for pickup.
+    range: dateTime
+      
+  deliveryEventId:
+    description: identifier of the delivery event
+    extends: common.identifier
+    range: string

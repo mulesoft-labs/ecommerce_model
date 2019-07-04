@@ -1,0 +1,255 @@
+#%Vocabulary 1.0
+
+base: http://schema.org/
+
+(area): warehouse
+
+uses:
+  common: ../common.yaml
+  party: ../sales/party.yaml
+  order: ../sales/order.yaml
+  
+classTerms:
+
+  Product:
+    description: |
+      Any offered product or service. For example: a pair of shoes; a concert ticket;
+      the rental of a car; a haircut; or an episode of a TV show streamed online.
+      Any offered product or service. For example: a pair of shoes; a concert ticket;
+      the rental of a car; a haircut; or an episode of a TV show streamed online.
+    properties:
+      - brand
+      - common.category
+      - color
+      - depth
+      - gtin
+      - gin12
+      - gtin13
+      - gtin14
+      - gtin8
+      - height
+      - hasReturnPolicy
+      - isRelatedTo
+      - isSimilarTo
+      - common.logo
+      - manufacturer
+      - material
+      - model
+      - mpn
+      - nsn
+      - offers
+      - productID
+      - productionDate
+      - purchaseDate
+      - sku
+      - slogan
+      - weight
+      - width
+
+
+  Brand:
+    description: |
+      A brand is a name used by an organization or business person for labeling a product,
+      product group, or similar.
+    properties:
+      - common.logo
+      - slogan
+
+  ProductReturnPolicy:
+    description: |
+      A ProductReturnPolicy provides information about product return policies associated with
+      an Organization or Product.
+    properties:
+      - inStoreReturnsOffered
+      - productReturnDays
+      - productReturnLink
+      - refundType
+      - returnFees
+      - returnPolicyCategory
+  
+
+  ProductModel:
+    description: A datasheet or vendor specification of a product (in the sense of a prototypical description).
+    extends: Product
+    properties:
+      - isVariantOf
+      - predecessorOf
+      - successorOf      
+    
+propertyTerms:
+  
+  brand:
+    description: |
+      The brand(s) associated with a product or service, or the brand(s) maintained by
+      an organization or business person.
+    range: Brand
+      
+  category:
+    description: |
+      A category for the item. Greater signs or slashes can be used to informally indicate
+      a category hierarchy. A category for the item. Greater signs or slashes can be used
+      to informally indicate a category hierarchy.
+    range: string
+      
+  color:
+    description: The color of the product
+    range: string
+      
+  depth:
+    description: The depth of the item
+    range: float
+      
+  gtin:
+    description:  |
+      A Global Trade Item Number (GTIN). GTINs identify trade items, including products
+      and services, using numeric identification codes. The gtin property generalizes the
+      earlier gtin8, gtin12, gtin13, and gtin14 properties.
+      The GS1 digital link specifications express GTINs as URLs. A correct gtin value should
+      be a valid GTIN, which means that it should be an all-numeric string of either 8, 12,
+      13 or 14 digits, or a "GS1 Digital Link" URL based on such a string. The numeric component
+      should also have a valid GS1 check digit and meet the other rules for valid GTINs.
+      See also GS1's GTIN Summary and Wikipedia for more details. Left-padding of the gtin values
+      is not required or encouraged.
+    extends: common.identifier
+    range: string
+      
+  gin12:
+    extends: gtin
+    range: string
+      
+  gtin13:
+    extends: gitn
+    range: string
+      
+  gtin14:
+    extends: gtin
+    range: string
+      
+  gtin8:
+    extends: gtin
+    range: string
+      
+  height:
+    description: The height of the item
+    range: float
+      
+  hasReturnPolicy:
+    description: Indicates a ProductReturnPolicy that may be applicable.
+    range: ProductReturnPolicy
+      
+  isRelatedTo:
+    description: A pointer to another, somehow related product (or multiple products).
+    range: Product
+      
+  isSimilarTo:
+    description: A pointer to another, functionally similar product 
+    range: Product
+      
+      
+  manufacturer:
+    description: The manufacturer of the product
+    range: party.Organization
+      
+  material:
+    description: A material that something is made from, e.g. leather, wool, cotton, paper.
+    range: string
+      
+  model:
+    description: A model description for the product
+    range: ProductModel
+      
+  mpn:
+    description: The Manufacturer Part Number (MPN) of the product, or the product to which the offer refers.
+    extends: productID
+    range: string
+      
+  nsn:
+    description: Indicates the NATO stock number (nsn) of a Product.
+    extends: productID
+    range: string
+      
+  offers:
+    description: |
+      An offer to provide this item—for example, an offer to sell a product,
+      rent the DVD of a movie, perform a service, or give away tickets to an event.
+    range: order.Offer
+      
+  productID:
+    description: |
+      The product identifier, such as ISBN. For example, meta itemprop="productID"
+      content="isbn:123-456-789".
+    extends: common.identifier
+    range: string
+      
+  productionDate:
+    description: The date of production of the item, e.g. vehicle.
+    range: date
+      
+  purchaseDate:
+    description: The date the item e.g. vehicle was purchased by the current owner.
+    range: date
+      
+  sku:
+    description: |
+      The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a
+      product or service, or the product to which the offer refers.
+    extends: productID
+    range: string
+      
+  slogan:
+    description: A slogan or motto associated with the item.
+    range: string
+      
+  weight:
+    description: The weight of the product or person.
+    range: string
+      
+  width:
+    description: The width of the item.
+    range: string
+
+  inStoreReturnsOffered:
+    description: Are in-store returns offered?
+    range: boolean
+      
+  productReturnDays:
+    description: |
+      The productReturnDays property indicates the number of days
+      (from purchase) within which relevant product return policy
+      is applicable.
+    range: integer
+      
+  productReturnLink:
+    description: Indicates a Web page or service by URL, for product return.
+    extends: common.url
+    range: string
+      
+  refundType:
+    description: A refundType, from an enumerated list.
+    range: string
+      
+  returnFees:
+    description: Indicates (via enumerated options) the return fees policy for a ProductReturnPolicy
+    range: string
+      
+  returnPolicyCategory:
+    description: A returnPolicyCategory expresses at most one of several enumerated kinds of return.
+    range: string
+      
+
+  isVariantOf::
+    description: |
+      A pointer to a base product from which this product is a variant. It is safe to infer that the
+      variant inherits all product features from the base model, unless defined locally. This is not transitive.
+    range: ProductModel
+      
+  predecessorOf:
+    description: |
+      A pointer from a previous, often discontinued variant of the product to its newer variant.
+    range: ProductModel
+      
+  successorOf:
+    description: A pointer from a newer variant of a product to its previous, often discontinued predecessor.
+    range: ProductModel
+      
+    

@@ -1,0 +1,39 @@
+#%Vocabulary 1.0
+
+vocabulary: Common
+
+base: http://schema.org/
+    
+propertyTerms:
+
+  email:
+    description: Email address.
+    range: string
+    
+  name:
+    description: The name of the item
+    range: string
+    
+  identifier:
+    description: |
+      The identifier property represents any kind of identifier for any
+      kind of Thing, such as ISBNs, GTIN codes, UUIDs etc. Schema.org
+      provides dedicated properties for representing many of these,
+      either as textual strings or as URL (URI) links. See background
+      notes for more details.
+    range: string
+
+  url:
+    description: URL of the item
+    range: string
+
+  logo:
+    description: An associated logo
+    range: string
+
+  category:
+    description: |
+      A category for the item. Greater signs or slashes can be used to
+      informally indicate a category hierarchy.
+    range: string
+    
