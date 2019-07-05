@@ -1,0 +1,247 @@
+#%RAML 1.0
+
+title: Checkouts API
+version: 1.0
+baseUri: https://ecommerce.demo.com/checkouts
+
+mediaType: application/json
+
+uses:
+  rest: ../rest.raml
+
+types:
+
+  Money:
+    properties:
+      amount: number
+      currency: string
+      
+  ShoppingCartWrite:
+    properties:
+      presentmentCurrencyCode: string
+      lineItems?: CheckoutLineItem[]
+  
+  ShoppingCartRead:
+    type: ShoppingCartWrite
+    properties:
+      shoppingcartId: string
+      lineItems: CheckoutLineItem[]     
+      subtotalPrice: Money
+      totalPrice: Money
+      totalTax: Money
+
+  CheckoutLineItem:
+    properties:
+      variantId: string
+      quantity: integer
+
+      
+  CheckoutCreate:
+    properties:
+      allowPartialAddresses: boolean
+      email: string
+      note?: string
+      presentmentCurrencyCode: string
+      lineItems?:
+        CheckoutLineItem[]
+      shippingAddress:
+        MailingAddressRead
+
+  CheckoutRead:
+    type: CheckoutCreate
+    properties:
+      checkoutId: string
+      ready: boolean
+      requiresShipping: boolean
+      subtotalPrice: Money
+      taxExempt: boolean
+      taxesIncluded: boolean
+      totalPrice: Money
+      totalTax: Money
+      updateAt: datetime
+      webUrl: string
+      order: Order
+      orderStatusUrl: string
+      createdAt: datetime
+      updatedAt: datetime
+      completed: datetime
+      lineItems:
+        CheckoutLineItem[]
+
+  CheckoutUpdate:
+    type: CheckoutCreate
+    properties:
+      lineItems?: CheckoutLineItem[]
+      shippingLine:
+        properties:
+          handle: string
+      
+  MailingAddressCreate:
+    properties:
+      address1: string
+      address2: string
+      city: string
+      company: string
+      country: string
+      firstName: string
+      lastName: string
+      phone: string
+      province: string
+      zip: string
+
+  MailingAddressRead:
+    type: MailingAddressCreate
+    properties:
+      mailingAddressIdentifier: string
+      countryCode: string
+      formatted: string
+      formattedArea: string
+      latitude: number
+      longitude: number
+      name: string
+      provinceCode: string
+
+  ShippingRateOffering:
+    properties:
+      handle: string
+      price: string
+      title: string
+
+  ShippingLineCreate:
+    properties:
+      handle: string
+
+  PaymentCreate:
+    properties:
+      amount: number
+      currency: string
+      checkoutId: string
+      creditCardToken: string
+
+  PaymentRead:
+    type: PaymentCreate
+    properties:
+      paymentId: string
+      
+  Order:
+    properties:
+      orderId: string
+      name: string
+      orderNumber: integer
+      email: string
+      phone: string
+      shippingAddress: MailingAddressRead
+      statusUrl: string
+      subtotalPrice: Money
+      totalPrice: Money
+      totalTax: Money
+      customerLocale: string
+      customerUrl: string
+      processedAt: datetime      
+      createdAt: datetime
+      successfulFulfillments:
+        Fulfillment[]
+
+  Fulfillment:
+    properties:
+      trackingCompany: string
+      fulfillmentTrackingInfo:
+        items:
+          properties:
+            number: string
+            url: string
+      
+
+/shoping_carts:
+  (rest.resource): ShoppingCart Collection  
+  (rest.resourceType): collection
+  post:
+    is: [ rest.create: {schema: ShoppingCartWrite} ]
+  get:
+    is: [ rest.list: {schema: ShoppingCartRead} ]
+  (rest.hateoas):
+    members:
+      resource: ShoppingCart
+      method: get
+
+      
+/shopping_carts/{shoppingcartId}:
+  (rest.resource): ShoppingCart  
+  (rest.resourceType): individual
+  get:
+    is: [ rest.read: {schema: ShoppingCartRead} ]
+  put:
+    is: [ rest.update: {schema: ShoppingCartWrite} ]
+  delete:
+    is: [ rest.destroy ]
+  (rest.hateoas):
+    checkout:
+      resource: Checkouts Collection
+      method: post
+
+      
+/checkouts:
+  (rest.resource): Checkouts Collection  
+  (rest.resourceType): collection
+  post:
+    is: [ rest.create: {schema: CheckoutCreate} ]
+  get:
+    is: [ rest.list: {schema: CheckoutRead} ]
+  (rest.hateoas):
+    members:
+      resource: Checkout
+      method: get
+
+      
+/checkouts/{checkoutId}:
+  (rest.resource): Checkout
+  (rest.resourceType): individual
+  get:
+    is: [ rest.read: {schema: CheckoutRead} ]
+  put:
+    is: [ rest.update: {schema: CheckoutUpdate} ]
+  (rest.hateoas):
+    availableShippingRates:
+      resource: ShippingRates
+      method: get
+    selectShippingLine:
+      resource: ShippingLine
+      method: put
+    pay:
+      resource: Checkout Payment
+      method: post
+    order:
+      resource: Order
+      method: get
+    
+
+/checkouts/{checkoutId}/shipping_rates:
+  (rest.resource): ShippingRates
+  (rest.resourceType): collection
+  get:
+    is: [ rest.subscribe: {schema: ShippingRateOffering} ]
+    
+
+/checkouts/{checkoutId}/shippingLine:
+  (rest.resource): ShippingLine
+  (rest.resourceType): collection
+  get:
+    is: [ rest.read: {schema: ShippingRateOffering} ]
+  put:
+    is: [ rest.create: {schema: ShippingLineCreate} ]
+
+    
+/checkouts/{checkoutId}/payments:
+  (rest.resource): Checkout Payment
+  (rest.resourceType): individual
+  post:
+    is: [ rest.publish: {schema: PaymentCreate} ]
+  get:
+    is: [ rest.subscribe: {schema: PaymentRead} ]
+
+
+/checkouts/{checkoutId}/order:
+  (rest.resource): Order
+  (rest.resourceType): individual
+  get:
+    is: [ rest.subscribe: {schema: Order} ]

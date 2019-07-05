@@ -1,0 +1,90 @@
+#%RAML 1.0 Library
+
+types:
+  CollectionResourceSchema:
+    properties:
+      total: integer
+      members: any[]
+      
+annotationTypes:
+  (resourceType):
+    type: string
+    enum:
+      - collection
+      - indivual
+  (feature):
+    type: string
+    enum:
+      - create
+      - read
+      - update
+      - destroy
+      - list
+      - publish
+      - subscribe
+  (resource):
+    type: string
+
+  (hateoas):
+    type: any
+      
+traits:
+  
+  list:
+    (feature): list
+    queryParameters:
+      limit: integer
+      offset: integer
+    responses:
+      200:
+        body:
+          type: CollectionResourceSchema
+          properties:
+            members:
+              type: array
+              items: <<schema>>  
+
+  create:
+    (feature): create
+    body: <<schema>>
+    responses:
+      201:
+        headers:
+          location:
+          
+  read:
+    (feature): read
+    responses:
+      200:
+        body: <<schema>>
+
+
+  update:
+    (feature): update
+    body: <<schema>>
+    responses:
+      200:
+        headers:
+          location:
+
+  destroy:
+    (feature): destroy
+    responses:
+      200:
+
+  publish:
+    (feature): publish
+    responses:
+      202:
+        headers:
+          location:
+          retry-after:
+
+  subscribe:
+    (feature): subscribe
+    responses:
+      202:
+        headers:
+          location:      
+          retry-after:
+      
