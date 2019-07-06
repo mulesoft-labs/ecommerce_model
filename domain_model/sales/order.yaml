@@ -8,13 +8,12 @@ uses:
   party: ./party.yaml
   location: ../shipment/location.yaml
   delivery: ../shipment/delivery.yaml
-  invoice: ../billing/invoice.yaml
   price: ../billing/price.yaml
   payment: ../billing/payment.yaml
   product: ../warehouse/product.yaml
   common: ../common.yaml
 
-(area): sales
+# area: sales
   
 classTerms:
 
@@ -29,15 +28,12 @@ classTerms:
       - confirmationNumber
       - customer
       - price.discount
-      - price.discountCode
-      - price.discountCurrency
       - isGift
       - orderDate
       - orderDelivery
       - orderNumber
       - orderStatus
       - orderedItem
-      - partOfInvoice
       - seller
 
   Offer:
@@ -49,9 +45,9 @@ classTerms:
       - payment.acceptedPaymentMethod
       - addOn
       - price.price
-      - price.priceCurrency
+      - price.tax
       - offeredBy
-      - itemOffered
+      - item
       
   OrderItem:
     description: |
@@ -90,7 +86,7 @@ propertyTerms:
       In most cases a broker never acquires or releases ownership of a product or
       service involved in an exchange. If it is not clear whether an entity is a
       broker, seller, or buyer, the latter two terms are preferred. Supersedes bookingAgent.
-    range: common.Organization
+    range: party.Organization
 
   confirmationNumber:
     description: A number that confirms the given order or payment has been received.
@@ -121,14 +117,10 @@ propertyTerms:
     description: The current status of the order.
     range: string
 
-  orderedItem:
-    description: The item ordered.
-    range: OrderItem
-
-  partOfInvoice:
-    description: The order is being paid as part of the referenced Invoice.
-    range: invoice.Invoice
-
+  partOfOrder:
+    description: The overall order the items in this delivery were included in.
+    range: Order
+    
   seller:
     description: |
       An entity which offers (sells / leases / lends / loans) the services / goods.
@@ -186,11 +178,11 @@ propertyTerms:
   offeredBy:
     description: A pointer to the organization or person making the offer.
     range: party.Party
-    
-  itemOffered:
-    description: The item being offered
+
+  item:
+    description: Product added as an order item in an order
     range: product.Product
-    
+        
   warranty:
     description: |
       The warranty promise(s) included in the offer. Supersedes warrantyPromise.
@@ -206,10 +198,12 @@ propertyTerms:
     description: The scope of the warranty promise.
     range: string
 
-  orderDelivery:
-    description: The delivery of the parcel related to this order or order item.
-    range: delivery.ParcelDelivery
-
+  offers:
+    description: |
+      An offer to provide this item—for example, an offer to sell a product,
+      rent the DVD of a movie, perform a service, or give away tickets to an event.
+    range: Offer
+    
   orderItemNumber:
     extends: common.identifier
     description:  The identifier of the order item
@@ -228,7 +222,6 @@ propertyTerms:
     description: The item ordered
     range: product.Product
     
-
- item:
-   description: Product added as an order item in an order
-   range: product.Product
+  referencesOrder:
+    description: The Order(s) related to this item. One or more Orders may be combined.
+    range: Order

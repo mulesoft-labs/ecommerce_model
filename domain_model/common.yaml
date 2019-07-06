@@ -36,4 +36,15 @@ propertyTerms:
       A category for the item. Greater signs or slashes can be used to
       informally indicate a category hierarchy.
     range: string
-    
+
+  dateCreated:
+    description: The date on which the item was created.
+    range: dateTime
+
+  dateUpdated:
+    description: The date on which the item was updated.
+    range: dateTime
+
+  comment:
+    description: User provided textual comment
+    range: string

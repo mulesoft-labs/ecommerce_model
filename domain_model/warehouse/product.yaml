@@ -2,12 +2,11 @@
 
 base: http://schema.org/
 
-(area): warehouse
+# area: warehouse
 
 uses:
   common: ../common.yaml
   party: ../sales/party.yaml
-  order: ../sales/order.yaml
   
 classTerms:
 
@@ -37,7 +36,6 @@ classTerms:
       - model
       - mpn
       - nsn
-      - offers
       - productID
       - productionDate
       - purchaseDate
@@ -72,6 +70,7 @@ classTerms:
     description: A datasheet or vendor specification of a product (in the sense of a prototypical description).
     extends: Product
     properties:
+      - modelID
       - isVariantOf
       - predecessorOf
       - successorOf      
@@ -118,7 +117,7 @@ propertyTerms:
     range: string
       
   gtin13:
-    extends: gitn
+    extends: gtin
     range: string
       
   gtin14:
@@ -167,13 +166,7 @@ propertyTerms:
     description: Indicates the NATO stock number (nsn) of a Product.
     extends: productID
     range: string
-      
-  offers:
-    description: |
-      An offer to provide this item—for example, an offer to sell a product,
-      rent the DVD of a movie, perform a service, or give away tickets to an event.
-    range: order.Offer
-      
+            
   productID:
     description: |
       The product identifier, such as ISBN. For example, meta itemprop="productID"
@@ -237,7 +230,7 @@ propertyTerms:
     range: string
       
 
-  isVariantOf::
+  isVariantOf:
     description: |
       A pointer to a base product from which this product is a variant. It is safe to infer that the
       variant inherits all product features from the base model, unless defined locally. This is not transitive.
@@ -252,4 +245,8 @@ propertyTerms:
     description: A pointer from a newer variant of a product to its previous, often discontinued predecessor.
     range: ProductModel
       
-    
+
+  modelID:
+    description: Identifier of a product model
+    extends: productID
+    range: string

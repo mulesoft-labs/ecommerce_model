@@ -4,8 +4,20 @@ vocabulary: Price
 
 base: http://schema.org/
 
+classTerms:
+  MonetaryAmount:
+    description: A structured value representing a price or price range.
+    properties:
+      - amount
+      - currency
+      - valueAddedTaxIncluded
+        
 propertyTerms:
 
+  amount:
+    description: The amount of money.
+    range: double
+    
   currency:
     description: |
       The currency in which the monetary amount is expressed.
@@ -15,28 +27,38 @@ propertyTerms:
       "Ithaca HOUR".
     range: string
 
+  tax:
+    description: Amount of value owed in taxes as part of a payment
+    range: MonetaryAmount
+
+  totalTax:
+    description: Total amount owed in taxes
+    extends: tax
+    range: MonetaryAmount
+    
   price:
     description: |
       The offer price of a product, or of a price component when attached
       to PriceSpecification and its subtypes.
-    range: double
+    range: MonetaryAmount
 
-  priceCurrency:
+  totalPrice:
     description: |
-      The currency of the price, or a price component when attached to
-      PriceSpecification and its subtypes.
-    extends: currency
-    range: string
-
+      The total price for the reservation or ticket, including applicable taxes,
+      shipping, etc.
+    extends: price
+    range: MonetaryAmount
+    
   discount:
     description: Any discount applied (to an Order).
-    range: float
+    range: MonetaryAmount
 
   discountCode:
     description: Code used to redeem a discount.
     range: string
 
-  discountCurrency:
-    description: The currency of the discount.
-    extends: currency
-    range: string    
+  valueAddedTaxIncluded:
+    description: |
+      Specifies whether the applicable value-added tax (VAT) is included
+      in the price specification or not.
+    range: boolean

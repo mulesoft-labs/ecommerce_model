@@ -2,7 +2,7 @@
 
 base: http://schema.org/
 
-(area): billing
+# area: billing
 
 uses:
   common: ../common.yaml
@@ -36,3 +36,8 @@ propertyTerms:
       The Order(s) related to this Invoice. One or more Orders may be combined
       into a single Invoice.
     range: order.Order
+
+  partOfInvoice:
+    description: The order is being paid as part of the referenced Invoice.
+    range: Invoice
+    

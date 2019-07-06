@@ -4,13 +4,13 @@ vocabulary: Delivery
 
 base: http://schema.org/
 
-(area): shipment
+# area: shipment
 
 uses:
   location: ./location.yaml
   product: ../warehouse/product.yaml
-  order: ../sales/order.yaml
-  party: ../sales/order.yaml
+  party: ../sales/party.yaml
+  common: ../common.yaml
   
 classTerms:
 
@@ -24,7 +24,6 @@ classTerms:
       - hasDeliveryMethod
       - itemShipped
       - originAddress
-      - partOfOrder
       - provider
       - trackingNumber
       - trackingUrl
@@ -81,12 +80,8 @@ propertyTerms:
   originAddress:
     description: Origin address
     extends: location.address
-    range: location.Address
-      
-  partOfOrder:
-    description: The overall order the items in this delivery were included in.
-    range: order.Order
-      
+    range: location.PostalAddress
+            
   provider:
     description: The service provider, service operator, or service performer
     range: party.Organization

@@ -9,7 +9,7 @@ uses:
   location: ../shipment/location.yaml
 
   
-(area): sales
+# area: sales
 
 classTerms:
 
@@ -51,7 +51,7 @@ propertyTerms:
     range: string
 
   vatID:
-    decription: The Value-added Tax ID of the organization or person.
+    description: The Value-added Tax ID of the organization or person.
     extends: common.identifier
     range: string  
 
@@ -64,14 +64,14 @@ propertyTerms:
     description: |
       	Given name. In the U.S., the first name of a Person.
         This can be used along with familyName instead of the name property.
-    extends: name
+    extends: common.name
     range: string
 
   familyName:
     description: |
       Family name. In the U.S., the last name of an Person.
       This can be used along with givenName instead of the name property.
-    extends: name
+    extends: common.name
     range: string
 
   gender:
@@ -81,13 +81,11 @@ propertyTerms:
     range: string
 
   personalTitle:
-    description: |
-      The personal title of the person (mr, mrs, ms, dr).
+    description: The personal title of the person (mr, mrs, ms, dr).
     range: string
 
-  jobtitle:
-    description: |
-      The job title of the person (for example, Financial Manager).
+  jobTitle:
+    description: The job title of the person (for example, Financial Manager).
     range: string
 
   age:

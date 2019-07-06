@@ -7,7 +7,7 @@ base: http://schema.org/
 uses:
   common: ../common.yaml
 
-(area): shipment
+# area: shipment
 
 classTerms:
 
@@ -81,11 +81,15 @@ propertyTerms:
     range: double
     
   longitude:
-    range: dobule
+    range: double
     
   elevation:
     range: float
 
+  place:
+    description: Place associated to a location
+    range: Place
+    
   polygon:
     description: |
       A polygon is the area enclosed by a point-to-point path for which
