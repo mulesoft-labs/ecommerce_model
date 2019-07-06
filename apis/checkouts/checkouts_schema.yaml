@@ -1,0 +1,167 @@
+#%RAML 1.0 Library
+
+uses:
+  data_model: ../data_model.yaml
+
+(data_model.context): ../../data_model/checkouts/schema.yaml
+
+types:
+
+  Money:
+    (data_model.model): Money
+    (data_model.mode): read-write
+    properties:
+      amount: number
+      currency: string
+
+  ShoppingCartWrite:
+    (data_model.model): ShoppingCart
+    (data_model.mode): write
+    properties:
+      presentmentCurrencyCode: string
+      lineItems?: CheckoutLineItem[]
+
+  ShoppingCartRead:
+    (data_model.model): ShoppingCart
+    (data_model.mode): read
+    properties:
+      shoppingcartId: string
+      lineItems: CheckoutLineItem[]     
+      subtotalPrice: Money
+      totalPrice: Money
+      totalTax: Money
+
+  CheckoutLineItem:
+    (data_model.model): ShoppingCart
+    (data_model.mode): read-write
+    properties:
+      variantId: string
+      quantity: integer
+      
+  CheckoutCreate:
+    (data_model.model): Checkout
+    (data_model.mode): write
+    properties:
+      allowPartialAddresses: boolean
+      email: string
+      note?: string
+      presentmentCurrencyCode: string
+      lineItems?:
+        CheckoutLineItem[]
+      shippingAddress:
+        MailingAddressRead
+
+  CheckoutRead:
+    (data_model.model): Checkout
+    (data_model.mode): read
+    type: CheckoutCreate
+    properties:
+      checkoutId: string
+      ready: boolean
+      requiresShipping: boolean
+      subtotalPrice: Money
+      taxExempt: boolean
+      taxesIncluded: boolean
+      totalPrice: Money
+      totalTax: Money
+      updateAt: datetime
+      webUrl: string
+      order: Order
+      orderStatusUrl: string
+      createdAt: datetime
+      updatedAt: datetime
+      completed: datetime
+      lineItems:
+        CheckoutLineItem[]
+    
+  MailingAddressWrite:
+    (data_model.model): MailingAddress
+    (data_model.mode): write
+    properties:
+      address1: string
+      address2: string
+      city: string
+      company: string
+      country: string
+      firstName: string
+      lastName: string
+      phone: string
+      province: string
+      zip: string
+
+  MailingAddressRead:
+    (data_model.model): MailingAddress
+    (data_model.mode): read
+    type: MailingAddressWrite
+    properties:
+      mailingAddressIdentifier: string
+      countryCode: string
+      formatted: string
+      formattedArea: string
+      latitude: number
+      longitude: number
+      name: string
+      provinceCode: string
+
+  ShippingRateRead:
+    (data_model.model): ShippingRate
+    (data_model.mode): read-write
+    properties:
+      handle: string
+      price: string
+      title: string
+
+  ShippingRateWrite:
+    (data_model.model): ShippingRate
+    (data_model.mode): read-write
+    properties:
+      handle: string      
+
+  PaymentWrite:
+    (data_model.model): Payment
+    (data_model.mode): write
+    properties:
+      amount: number
+      currency: string
+      checkoutId: string
+      creditCardToken: string
+
+  PaymentRead:
+    (data_model.model): Payment
+    (data_model.mode): write
+    type: PaymentWrite
+    properties:
+      paymentId: string
+
+  Order:
+    (data_model.model): Order
+    (data_model.mode): read-write
+    properties:
+      orderId: string
+      name: string
+      orderNumber: integer
+      email: string
+      phone: string
+      shippingAddress: MailingAddressRead
+      statusUrl: string
+      subtotalPrice: Money
+      totalPrice: Money
+      totalTax: Money
+      customerLocale: string
+      customerUrl: string
+      processedAt: datetime      
+      createdAt: datetime
+      successfulFulfillments:
+        Fulfillment[]
+
+  Fulfillment:
+    (data_model.model): Fulfillment
+    (data_model.mode): read-write
+    properties:
+      trackingCompany: string
+      fulfillmentTrackingInfo:
+        items:
+          properties:
+            number: string
+            url: string
+      

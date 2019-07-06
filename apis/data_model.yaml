@@ -1,0 +1,6 @@
+#%RAML 1.0 Library
+
+annotationTypes:
+  context: string
+  model: string
+  mode: string

@@ -8,157 +8,31 @@ mediaType: application/json
 
 uses:
   rest: ../rest.raml
+  data_model: ../data_model.yaml  
+  schema: ./checkouts_schema.yaml
 
 types:
 
-  Money:
-    properties:
-      amount: number
-      currency: string
-      
-  ShoppingCartWrite:
-    properties:
-      presentmentCurrencyCode: string
-      lineItems?: CheckoutLineItem[]
-  
-  ShoppingCartRead:
-    type: ShoppingCartWrite
-    properties:
-      shoppingcartId: string
-      lineItems: CheckoutLineItem[]     
-      subtotalPrice: Money
-      totalPrice: Money
-      totalTax: Money
-
-  CheckoutLineItem:
-    properties:
-      variantId: string
-      quantity: integer
-
-      
-  CheckoutCreate:
-    properties:
-      allowPartialAddresses: boolean
-      email: string
-      note?: string
-      presentmentCurrencyCode: string
-      lineItems?:
-        CheckoutLineItem[]
-      shippingAddress:
-        MailingAddressRead
-
-  CheckoutRead:
-    type: CheckoutCreate
-    properties:
-      checkoutId: string
-      ready: boolean
-      requiresShipping: boolean
-      subtotalPrice: Money
-      taxExempt: boolean
-      taxesIncluded: boolean
-      totalPrice: Money
-      totalTax: Money
-      updateAt: datetime
-      webUrl: string
-      order: Order
-      orderStatusUrl: string
-      createdAt: datetime
-      updatedAt: datetime
-      completed: datetime
-      lineItems:
-        CheckoutLineItem[]
-
+  # This is ad-hoc, it can be generated when binding the schema to the resource
+  # in the GUI tool.
+  # It is still possible to customize the schemas from tehd ata model.
   CheckoutUpdate:
-    type: CheckoutCreate
+    (data_model.context): ../../data_model/checkouts/schema.yaml
+    (schema.model): Checkout
+    (schema.mode): write
     properties:
-      lineItems?: CheckoutLineItem[]
+      lineItems?: schema.CheckoutLineItem[]
       shippingLine:
         properties:
-          handle: string
-      
-  MailingAddressCreate:
-    properties:
-      address1: string
-      address2: string
-      city: string
-      company: string
-      country: string
-      firstName: string
-      lastName: string
-      phone: string
-      province: string
-      zip: string
-
-  MailingAddressRead:
-    type: MailingAddressCreate
-    properties:
-      mailingAddressIdentifier: string
-      countryCode: string
-      formatted: string
-      formattedArea: string
-      latitude: number
-      longitude: number
-      name: string
-      provinceCode: string
-
-  ShippingRateOffering:
-    properties:
-      handle: string
-      price: string
-      title: string
-
-  ShippingLineCreate:
-    properties:
-      handle: string
-
-  PaymentCreate:
-    properties:
-      amount: number
-      currency: string
-      checkoutId: string
-      creditCardToken: string
-
-  PaymentRead:
-    type: PaymentCreate
-    properties:
-      paymentId: string
-      
-  Order:
-    properties:
-      orderId: string
-      name: string
-      orderNumber: integer
-      email: string
-      phone: string
-      shippingAddress: MailingAddressRead
-      statusUrl: string
-      subtotalPrice: Money
-      totalPrice: Money
-      totalTax: Money
-      customerLocale: string
-      customerUrl: string
-      processedAt: datetime      
-      createdAt: datetime
-      successfulFulfillments:
-        Fulfillment[]
-
-  Fulfillment:
-    properties:
-      trackingCompany: string
-      fulfillmentTrackingInfo:
-        items:
-          properties:
-            number: string
-            url: string
-      
+          handle: string                 
 
 /shoping_carts:
   (rest.resource): ShoppingCart Collection  
   (rest.resourceType): collection
   post:
-    is: [ rest.create: {schema: ShoppingCartWrite} ]
+    is: [ rest.create: {schema: schema.ShoppingCartWrite} ]
   get:
-    is: [ rest.list: {schema: ShoppingCartRead} ]
+    is: [ rest.list: {schema: schema.ShoppingCartRead} ]
   (rest.hateoas):
     members:
       resource: ShoppingCart
@@ -169,9 +43,9 @@ types:
   (rest.resource): ShoppingCart  
   (rest.resourceType): individual
   get:
-    is: [ rest.read: {schema: ShoppingCartRead} ]
+    is: [ rest.read: {schema: schema.ShoppingCartRead} ]
   put:
-    is: [ rest.update: {schema: ShoppingCartWrite} ]
+    is: [ rest.update: {schema: schema.ShoppingCartWrite} ]
   delete:
     is: [ rest.destroy ]
   (rest.hateoas):
@@ -184,9 +58,9 @@ types:
   (rest.resource): Checkouts Collection  
   (rest.resourceType): collection
   post:
-    is: [ rest.create: {schema: CheckoutCreate} ]
+    is: [ rest.create: {schema: schema.CheckoutCreate} ]
   get:
-    is: [ rest.list: {schema: CheckoutRead} ]
+    is: [ rest.list: {schema: schema.CheckoutRead} ]
   (rest.hateoas):
     members:
       resource: Checkout
@@ -197,7 +71,7 @@ types:
   (rest.resource): Checkout
   (rest.resourceType): individual
   get:
-    is: [ rest.read: {schema: CheckoutRead} ]
+    is: [ rest.read: {schema: schema.CheckoutRead} ]
   put:
     is: [ rest.update: {schema: CheckoutUpdate} ]
   (rest.hateoas):
@@ -219,29 +93,29 @@ types:
   (rest.resource): ShippingRates
   (rest.resourceType): collection
   get:
-    is: [ rest.subscribe: {schema: ShippingRateOffering} ]
+    is: [ rest.subscribe: {schema: schema.ShippingRateRead} ]
     
 
 /checkouts/{checkoutId}/shippingLine:
   (rest.resource): ShippingLine
   (rest.resourceType): collection
   get:
-    is: [ rest.read: {schema: ShippingRateOffering} ]
+    is: [ rest.read: {schema: schema.ShippingRateRead} ]
   put:
-    is: [ rest.create: {schema: ShippingLineCreate} ]
+    is: [ rest.create: {schema: schema.ShippingRateWrite} ]
 
     
 /checkouts/{checkoutId}/payments:
   (rest.resource): Checkout Payment
   (rest.resourceType): individual
   post:
-    is: [ rest.publish: {schema: PaymentCreate} ]
+    is: [ rest.publish: {schema: schema.PaymentWrite} ]
   get:
-    is: [ rest.subscribe: {schema: PaymentRead} ]
+    is: [ rest.subscribe: {schema: schema.PaymentRead} ]
 
 
 /checkouts/{checkoutId}/order:
   (rest.resource): Order
   (rest.resourceType): individual
   get:
-    is: [ rest.subscribe: {schema: Order} ]
+    is: [ rest.subscribe: {schema: schema.Order} ]

@@ -1,0 +1,371 @@
+#%Dialect 1.0
+
+dialect: Checkouts
+version: 1.0
+
+uses:
+  common: ../../domain_model/common.yaml
+  price: ../../domain_model/billing/price.yaml
+  order: ../../domain_model/sales/order.yaml
+  product: ../../domain_model/warehouse/product.yaml
+  location: ../../domain_model/shipment/location.yaml
+  delivery: ../../domain_model/shipment/delivery.yaml
+  party: ../../domain_model/sales/party.yaml
+  
+nodeMappings:
+
+  Money:
+    classTerm: price.MonetaryAmount
+    mapping:
+      amount:
+        propertyTerm: price.amount
+        range: double
+        mandatory: true
+        minimum: 0.0
+      currency:
+        propertyTerm: price.currency
+        range: string
+        mandatory: true
+        enum:
+          - USD
+          - EUR
+          - GBP
+
+  ShoppingCart:
+    mapping:
+      shoppingCartId:
+        propertyTerm: common.identifier
+        range: string
+        mandatory: true
+        (readonly): true
+        unique: true
+      subtotalPrice:
+        propertyTerm: price.price
+        range: Money
+        (readonly): true
+      totalPrice:
+        propertyTerm: price.totalPrice
+        range: Money
+        (readonly): true
+      presentmentCurrencyCode:
+        propertyTerm: price.currency
+        range: string
+        (writeonly): true
+      lineItems:
+        propertyTerm: order.orderedItem
+        allowMultiple: true
+        range: CheckoutLineItem        
+      totalTax:
+        propertyTerm: price.totalTax
+        range: Money
+        (readonly): true        
+
+        
+  CheckoutLineItem:
+    classTerm: order.OrderItem
+    mapping:
+      variantId:
+        propertyTerm: product.modelID
+        range: string
+        mandatory: true
+        unique: true
+      quantity:
+        propertyTerm: order.orderQuantity
+        mandatory: true
+        minimum: 0
+        range: integer
+             
+
+  Checkout:
+    mapping:
+      allowPartialAddresses:
+        range: boolean
+        mandatory: true
+      email:
+        propertyTerm: common.email
+        range: string
+        mandatory: true
+      note:
+        propertyTerm: common.comment
+        range: string
+      presentmentCurrencyCode:
+        propertyTerm: price.currency
+        range: string
+        mandatory: true
+      shippingAddress:
+        propertyTerm: delivery.deliveryAddress
+        range: MailingAddress
+        mandatory: true
+      checkoutId:
+        propertyTerm: common.identifier
+        range: string
+        unique: true
+        mandatory: true
+        (readonly): true
+      ready:
+        range: boolean
+        mandatory: true        
+        (readonly): true
+      requiresShipping:
+        range: boolean
+        mandatory: true        
+        (readonly): true        
+      subtotalPrice:
+        propertyTerm: price.price
+        range: Money
+        mandatory: true        
+        (readonly): true        
+      taxExempt:
+        range: boolean
+        mandatory: true        
+        (readonly): true        
+      taxesIncluded:
+        propertyTerm: price.valueAddedTaxIncluded
+        range: boolean
+        mandatory: true        
+        (readonly): true        
+      totalPrice:
+        propertyTerm: price.totalPrice
+        range: Money
+        mandatory: true        
+        (readonly): true        
+      totalTax:
+        propertyTerm: price.totalTax
+        range: Money
+        mandatory: true        
+        (readonly): true        
+      updateAt:
+        range: dateTime
+        mandatory: true        
+        (readonly): true        
+      webUrl:
+        propertyTerm: common.url
+        range: string
+        mandatory: true        
+        (readonly): true        
+      order:
+        propertyTerm: order.referencesOrder
+        range: Order
+        (readonly): true        
+      orderStatusUrl:
+        range: string
+        mandatory: true        
+        (readonly): true        
+      createdAt:
+        propertyTerm: common.dateCreated
+        range: dateTime
+        mandatory: true                
+        (readonly): true        
+      updatedAt:
+        propertyTerm: common.dateUpdated
+        range: dateTime
+        mandatory: true                
+        (readonly): true        
+      completed:
+        range: dateTime
+        mandatory: true                
+        (readonly): true                
+      lineItems:
+        propertyTerm: order.orderedItem        
+        range: CheckoutLineItem
+        mandatory: true                
+        allowMultiple: true
+
+
+  MailingAddress:
+    classTerm: location.PostalAddress
+    mapping:
+      address1:
+        propertyTerm: location.streetAddress
+        range: string
+        mandatory: true                        
+      address2:
+        range: string
+        mandatory: true                        
+      city:
+        propertyTerm: location.addressLocality
+        range: string
+        mandatory: true                        
+      company:
+        range: string
+        mandatory: true                        
+      country:
+        propertyTerm: location.addressCountry
+        range: string
+        mandatory: true                        
+      firstName:
+        propertyTerm: party.givenName
+        range: string
+        mandatory: true                        
+      lastName:
+        propertyTerm: party.familyName
+        range: string
+        mandatory: true                        
+      phone:
+        propertyTerm: party.telephone
+        range: string
+        mandatory: true                        
+      province:
+        propertyTerm: location.addressRegion
+        range: string
+        mandatory: true                        
+      zip:
+        propertyTerm: location.postalCode
+        range: string
+        mandatory: true                        
+      mailingAddressIdentifier:
+        propertyTerm: common.identifier
+        range: string
+        (readonly): true
+        mandatory: true                        
+      countryCode:
+        range: string
+        (readonly): true
+        mandatory: true                        
+      formatted:
+        range: string
+        (readonly): true
+        mandatory: true                        
+      formattedArea:
+        range: string
+        (readonly): true
+        mandatory: true                        
+      latitude:
+        propertyTerm: location.latitude
+        range: double
+        (readonly): true
+        mandatory: true                        
+      longitude:
+        propertyTerm: location.longitude
+        range: double
+        (readonly): true
+        mandatory: true                                
+      name:
+        propertyTerm: common.name
+        range: string
+        (readonly): true
+        mandatory: true                                
+      provinceCode:
+        range: string
+        (readonly): true
+        mandatory: true                                
+
+  ShippingRate:
+    mapping:
+      handle:
+        propertyTerm: common.identifier
+        range: string
+        mandatory: true
+      price:
+        propertyTerm: price.amount
+        range: string
+        mandatory: true
+        (readonly): true
+      title:
+        propertyTerm: common.name
+        range: string
+        mandatory: true
+        (readonly): true        
+
+  Payment:
+    classTerm: price.MonetaryAmount
+    mapping:
+      amount:
+        propertyTerm: price.amount
+        range: double
+        mandatory: true        
+        (writeonly): true
+      currency:
+        propertyTerm: price.currency
+        range: string
+        mandatory: true        
+        (writeonly): true        
+      checkoutId:
+        range: string
+        mandatory: true        
+        (writeonly): true        
+      creditCardToken:
+        range: string
+        mandatory: true        
+        (writeonly): true        
+      paymentId:
+        propertyTerm: common.identifier
+        range: string
+        mandatory: true
+        (readonly): true
+
+  Order:
+    classTerm: order.Order
+    mapping:
+      orderId:
+        propertyTerm: common.identifier
+        range: string
+        unique: true
+        mandatory: true
+      name:
+        propertyTerm: common.name
+        range: string
+        mandatory: true
+      orderNumber:
+        propertyTerm: order.orderNumber
+        range: integer
+        mandatory: true          
+      email:
+        propertyTerm: common.email
+        range: string
+        mandatory: true          
+      phone:
+        propertyTerm: party.telephone
+        range: string
+        mandatory: true          
+      shippingAddress:
+        propertyTerm: delivery.deliveryAddress
+        range: MailingAddress
+        mandatory: true          
+      statusUrl:
+        propertyTerm: common.url
+        range: string
+        mandatory: true          
+      subtotalPrice:
+        propertyTerm: price.price
+        range: Money
+        mandatory: true          
+      totalPrice:
+        propertyTerm: price.totalPrice
+        range: Money
+        mandatory: true          
+      totalTax:
+        propertyTerm: price.totalTax
+        range: Money
+        mandatory: true          
+      customerLocale:
+        range: string
+        mandatory: true          
+      customerUrl:
+        range: string
+        mandatory: true          
+      processedAt:
+        range: dateTime
+        mandatory: true          
+      createdAt:
+        propertyTerm: order.orderDate
+        range: dateTime
+        mandatory: true          
+      successfulFulfillments:
+        propertyTerm: order.orderDelivery
+        range: Fulfillment
+        allowMultiple: true
+        mandatory: true
+        
+
+  Fulfillment:
+    classTerm: delivery.ParcelDelivery
+    mapping:
+      number:
+        propertyTerm: delivery.trackingNumber
+        range: string
+        mandatory: true
+      url:
+        propertyTerm: delivery.trackingUrl
+        range: string
+        mandatory: true        
