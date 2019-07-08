@@ -29,7 +29,7 @@ nodeMappings:
         enum:
           - USD
           - EUR
-          - GBP
+          - GBP        
 
   ShoppingCart:
     mapping:

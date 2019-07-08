@@ -4,3 +4,4 @@ annotationTypes:
   context: string
   model: string
   mode: string
+  example: any

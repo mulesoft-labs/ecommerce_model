@@ -11,8 +11,27 @@ types:
     (data_model.model): Money
     (data_model.mode): read-write
     properties:
-      amount: number
-      currency: string
+      amount:
+        type: number
+        minimum: 0.0
+      currency:
+        type: string
+        enum:
+          - USD
+          - EUR
+          - GBP
+    example:
+      amount: 3.0
+      currency: EUR
+    (data_model.example): |
+      {
+        "@context": {
+          "sorg": "http://schema.org/"
+        },
+        "@type": "sorg:MonetaryValue",
+        "sorg:amount": 3.0,
+        "sorg:currency": "EUR"
+      }
 
   ShoppingCartWrite:
     (data_model.model): ShoppingCart
@@ -32,7 +51,7 @@ types:
       totalTax: Money
 
   CheckoutLineItem:
-    (data_model.model): ShoppingCart
+    (data_model.model): CheckoutLineItem
     (data_model.mode): read-write
     properties:
       variantId: string
@@ -153,6 +172,109 @@ types:
       createdAt: datetime
       successfulFulfillments:
         Fulfillment[]
+    example:
+      orderId: 7749303-fc
+      name: sample order
+      orderNumber: 88374
+      email: client@gmail.com
+      phone: "+4455279303"
+      shippingAddress:
+        mailingAddressIdentifier: 664hfj394h34h
+        address1: Finchley Road 453
+        address2: Kings Court Flat C
+        city: London
+        company: none
+        country: United Kingdom
+        countryCode: UK
+        firstName: John
+        lastName: Wadus
+        phone: "+4455279303"
+        province: Greater London
+        provinceCode: uk_gl
+        formatted: |
+          Finchley Road 453
+          Kings Court Flat C
+          NW3 8CD
+          London
+          UK
+        formattedArea: |
+          London, UK
+        latitude: 51.5468
+        longitude: -0.1801
+        name: home address
+        zip: NW3 8CD
+      statusUrl: http://myorder.com/order#
+      subtotalPrice:
+        amount: 30.4
+        currency: GBP
+      totalPrice:
+        amount: 33.4
+        currency: GBP
+      totalTax:
+        amount: 3.0
+        currency: GBP
+      customerLocale: en-gb
+      customerUrl: http://myorder.com/customer#
+      processedAt: 2015-03-04T20:45:03Z
+      createdAt: 2015-03-04T20:45:01Z
+      successfulFulfillments: []
+    (datamodel.example): |
+      {
+        "@context": {
+          "sorg": "http://schema.org/",
+          "data": "http://a.ml/vocabds/data#"
+        },
+        "@type": "sorg:Order",
+        "sorg:identifier": "7749303-fc",
+        "sorg:name": "sample order",
+        "sorg:orderNumber": 88374,
+        "sorg:email": "client@gmail.com",
+        "sorg:telephone": "+4455279303",
+        "sorg:deliveryAddress": {
+          "@type": "sorg:PostalAddress",
+          "sorg:identifier": "664hfj394h34h",
+          "sorg:streetAddress": "Finchley Road 453",
+          "data:address2": "Kings Court Flat C",
+          "sorg:addressLocality": "London",
+          "data:company": "none",
+          "sorg:addressCountry": "United Kingdom",
+          "data:countryCode": "UK",
+          "sorg:givenName": "John",
+          "sorg:familyName": "Wadus",
+          "sorg:telephone": "+4455279303",
+          "sorg:addressRegion": "Greater London",
+          "data:provinceCode": "uk_gl",
+          "data:formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK",
+          "data:formattedArea": "London, UK",
+          "sorg:latitude": 51.5468,
+          "sorg:longitude": -0.1801,
+          "sorg:name": "home address",
+          "sorg:postalCode": "NW3 8CD"
+        },
+        "sorg:url": "http://myorder.com/order#",
+        "sorg:subtotalPrice": {
+          "@type": "sorg:MonetaryValue",
+          "sorg:amount": 30.4,
+          "sorg:currency": "GBP"
+        },
+        "sorg:totalPrice": {
+          "@type": "sorg:MonetaryValue",
+          "sorg:amount": 33.4,
+          "sorg:currency": "GBP"
+        },
+        "sorg:totalTax": {
+          "@type": "sorg:MonetaryValue",          
+          "sorg:amount": 3.0,
+          "sorg:currency": "GBP"
+        },
+        "data:customerLocale": "en-gb",
+        "data:customerUrl": "http://myorder.com/customer#",
+        "data:processedAt": "2015-03-04T20:45:03Z",
+        "sorg:orderDate": "2015-03-04T20:45:01Z",
+        "sorg:orderDelivery": []
+      }
+    
+        
 
   Fulfillment:
     (data_model.model): Fulfillment
