@@ -7,7 +7,7 @@ info:
   version: 1.0
 
 servers:
-  - url: https://ecommerce.demo.com/checkouts
+  - url: demo.ecommerce.com/checkouts
     protocol: ws
 
 
@@ -17,23 +17,23 @@ channels:
       message:
         schemaFormat: RAML 1.0 DataType
         payload:
-          $ref: ../data_mode.yaml#/types/ShippingRateRead
+          $ref: ./checkouts_schema.yaml#/types/ShippingRateRead
 
   /checkouts/{checkoutId}/payments:
     subscribe:
       message:
         schemaFormat: RAML 1.0 DataType
         payload:
-          $ref: ../data_mode.yaml#/types/PaymentRead
+          $ref: ./checkouts_schema.yaml#/types/PaymentRead
     publish:
       message:
         schemaFormat: RAML 1.0 DataType
         payload:
-          $ref: ../data_mode.yaml#/types/PaymentWrite
+          $ref: ./checkouts_schema.yaml#/types/PaymentWrite
 
   /checkouts/{checkoutId}/order:
     subscribe:
       message:
         schemaFormat: RAML 1.0 DataType
         payload:
-          $ref: ../data_mode.yaml#/types/Order                              
+          $ref: ./checkouts_schema.yaml#/types/Order                              
