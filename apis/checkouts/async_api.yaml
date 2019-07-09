@@ -1,0 +1,39 @@
+asyncapi: 2.0.0
+
+id: apis:async:checkouts
+
+info:
+  title: Checkouts Async API
+  version: 1.0
+
+servers:
+  - url: https://ecommerce.demo.com/checkouts
+    protocol: ws
+
+
+channels:
+  /checkouts/{checkoutId}/shipping_rates:
+    subscribe:
+      message:
+        schemaFormat: RAML 1.0 DataType
+        payload:
+          $ref: ../data_mode.yaml#/types/ShippingRateRead
+
+  /checkouts/{checkoutId}/payments:
+    subscribe:
+      message:
+        schemaFormat: RAML 1.0 DataType
+        payload:
+          $ref: ../data_mode.yaml#/types/PaymentRead
+    publish:
+      message:
+        schemaFormat: RAML 1.0 DataType
+        payload:
+          $ref: ../data_mode.yaml#/types/PaymentWrite
+
+  /checkouts/{checkoutId}/order:
+    subscribe:
+      message:
+        schemaFormat: RAML 1.0 DataType
+        payload:
+          $ref: ../data_mode.yaml#/types/Order                              
