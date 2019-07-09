@@ -1,0 +1,2154 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Checkouts API",
+    "version": "1.0"
+  },
+  "host": "ecommerce.demo.com",
+  "basePath": "/checkouts",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/shoping_carts": {
+      "post": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-data_model.model": "ShoppingCart",
+              "x-data_model.mode": "write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "presentmentCurrencyCode"
+              ],
+              "properties": {
+                "presentmentCurrencyCode": {
+                  "type": "string"
+                },
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "create"
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "required": true,
+            "in": "query",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "members",
+                "total"
+              ],
+              "properties": {
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "ShoppingCart",
+                    "x-data_model.mode": "read",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "shoppingcartId",
+                      "lineItems",
+                      "subtotalPrice",
+                      "totalPrice",
+                      "totalTax"
+                    ],
+                    "properties": {
+                      "shoppingcartId": {
+                        "type": "string"
+                      },
+                      "lineItems": {
+                        "type": "array",
+                        "items": {
+                          "x-data_model.model": "CheckoutLineItem",
+                          "x-data_model.mode": "read-write",
+                          "type": "object",
+                          "additionalProperties": true,
+                          "required": [
+                            "variantId",
+                            "quantity"
+                          ],
+                          "properties": {
+                            "variantId": {
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "subtotalPrice": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "totalPrice": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "totalTax": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "x-feature": "list"
+      },
+      "x-rest.resource": "ShoppingCart Collection",
+      "x-rest.resourceType": "collection",
+      "x-rest.hateoas": {
+        "members": {
+          "resource": "ShoppingCart",
+          "method": "get"
+        }
+      }
+    },
+    "/shopping_carts/{shoppingcartId}": {
+      "parameters": [
+        {
+          "name": "shoppingcartId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "x-data_model.model": "ShoppingCart",
+              "x-data_model.mode": "read",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "shoppingcartId",
+                "lineItems",
+                "subtotalPrice",
+                "totalPrice",
+                "totalTax"
+              ],
+              "properties": {
+                "shoppingcartId": {
+                  "type": "string"
+                },
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "subtotalPrice": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                },
+                "totalPrice": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                },
+                "totalTax": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-feature": "read"
+      },
+      "put": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-data_model.model": "ShoppingCart",
+              "x-data_model.mode": "write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "presentmentCurrencyCode"
+              ],
+              "properties": {
+                "presentmentCurrencyCode": {
+                  "type": "string"
+                },
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "update"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "x-feature": "destroy"
+      },
+      "x-rest.resource": "ShoppingCart",
+      "x-rest.resourceType": "individual",
+      "x-rest.hateoas": {
+        "checkout": {
+          "resource": "Checkouts Collection",
+          "method": "post"
+        }
+      }
+    },
+    "/checkouts": {
+      "post": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-data_model.model": "Checkout",
+              "x-data_model.mode": "write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "allowPartialAddresses",
+                "email",
+                "presentmentCurrencyCode",
+                "shippingAddress"
+              ],
+              "properties": {
+                "allowPartialAddresses": {
+                  "type": "boolean"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "presentmentCurrencyCode": {
+                  "type": "string"
+                },
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "shippingAddress": {
+                  "x-data_model.model": "MailingAddress",
+                  "x-data_model.mode": "read",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "address1",
+                    "longitude",
+                    "name",
+                    "countryCode",
+                    "lastName",
+                    "formatted",
+                    "company",
+                    "firstName",
+                    "country",
+                    "formattedArea",
+                    "province",
+                    "zip",
+                    "mailingAddressIdentifier",
+                    "provinceCode",
+                    "phone",
+                    "city",
+                    "address2",
+                    "latitude"
+                  ],
+                  "properties": {
+                    "address1": {
+                      "type": "string"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "countryCode": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "formatted": {
+                      "type": "string"
+                    },
+                    "company": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "formattedArea": {
+                      "type": "string"
+                    },
+                    "province": {
+                      "type": "string"
+                    },
+                    "zip": {
+                      "type": "string"
+                    },
+                    "mailingAddressIdentifier": {
+                      "type": "string"
+                    },
+                    "provinceCode": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "address2": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "create"
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "required": true,
+            "in": "query",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "members",
+                "total"
+              ],
+              "properties": {
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "Checkout",
+                    "x-data_model.mode": "read",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "completed",
+                      "taxesIncluded",
+                      "webUrl",
+                      "lineItems",
+                      "order",
+                      "presentmentCurrencyCode",
+                      "updateAt",
+                      "taxExempt",
+                      "createdAt",
+                      "orderStatusUrl",
+                      "allowPartialAddresses",
+                      "totalTax",
+                      "email",
+                      "shippingAddress",
+                      "subtotalPrice",
+                      "updatedAt",
+                      "checkoutId",
+                      "ready",
+                      "requiresShipping",
+                      "totalPrice"
+                    ],
+                    "properties": {
+                      "completed": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "taxesIncluded": {
+                        "type": "boolean"
+                      },
+                      "webUrl": {
+                        "type": "string"
+                      },
+                      "lineItems": {
+                        "type": "array",
+                        "items": {
+                          "x-data_model.model": "CheckoutLineItem",
+                          "x-data_model.mode": "read-write",
+                          "type": "object",
+                          "additionalProperties": true,
+                          "required": [
+                            "variantId",
+                            "quantity"
+                          ],
+                          "properties": {
+                            "variantId": {
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "order": {
+                        "x-data_model.model": "Order",
+                        "x-data_model.mode": "read-write",
+                        "x-datamodel.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\",\n    \"data\": \"http://a.ml/vocabds/data#\"\n  },\n  \"@type\": \"sorg:Order\",\n  \"sorg:identifier\": \"7749303-fc\",\n  \"sorg:name\": \"sample order\",\n  \"sorg:orderNumber\": 88374,\n  \"sorg:email\": \"client@gmail.com\",\n  \"sorg:telephone\": \"+4455279303\",\n  \"sorg:deliveryAddress\": {\n    \"@type\": \"sorg:PostalAddress\",\n    \"sorg:identifier\": \"664hfj394h34h\",\n    \"sorg:streetAddress\": \"Finchley Road 453\",\n    \"data:address2\": \"Kings Court Flat C\",\n    \"sorg:addressLocality\": \"London\",\n    \"data:company\": \"none\",\n    \"sorg:addressCountry\": \"United Kingdom\",\n    \"data:countryCode\": \"UK\",\n    \"sorg:givenName\": \"John\",\n    \"sorg:familyName\": \"Wadus\",\n    \"sorg:telephone\": \"+4455279303\",\n    \"sorg:addressRegion\": \"Greater London\",\n    \"data:provinceCode\": \"uk_gl\",\n    \"data:formatted\": \"Finchley Road 453\\nKings Court Flat C\\nNW3 8CD\\nLondon\\nUK\",\n    \"data:formattedArea\": \"London, UK\",\n    \"sorg:latitude\": 51.5468,\n    \"sorg:longitude\": -0.1801,\n    \"sorg:name\": \"home address\",\n    \"sorg:postalCode\": \"NW3 8CD\"\n  },\n  \"sorg:url\": \"http://myorder.com/order#\",\n  \"sorg:subtotalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 30.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 33.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalTax\": {\n    \"@type\": \"sorg:MonetaryValue\",          \n    \"sorg:amount\": 3.0,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"data:customerLocale\": \"en-gb\",\n  \"data:customerUrl\": \"http://myorder.com/customer#\",\n  \"data:processedAt\": \"2015-03-04T20:45:03Z\",\n  \"sorg:orderDate\": \"2015-03-04T20:45:01Z\",\n  \"sorg:orderDelivery\": []\n}\n\n  \n",
+                        "example": {
+                          "orderId": "7749303-fc",
+                          "name": "sample order",
+                          "orderNumber": 88374,
+                          "email": "client@gmail.com",
+                          "phone": "+4455279303",
+                          "shippingAddress": {
+                            "mailingAddressIdentifier": "664hfj394h34h",
+                            "address1": "Finchley Road 453",
+                            "address2": "Kings Court Flat C",
+                            "city": "London",
+                            "company": "none",
+                            "country": "United Kingdom",
+                            "countryCode": "UK",
+                            "firstName": "John",
+                            "lastName": "Wadus",
+                            "phone": "+4455279303",
+                            "province": "Greater London",
+                            "provinceCode": "uk_gl",
+                            "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
+                            "formattedArea": "London, UK\n",
+                            "latitude": 51.5468,
+                            "longitude": -0.1801,
+                            "name": "home address",
+                            "zip": "NW3 8CD"
+                          },
+                          "statusUrl": "http://myorder.com/order#",
+                          "subtotalPrice": {
+                            "amount": 30.4,
+                            "currency": "GBP"
+                          },
+                          "totalPrice": {
+                            "amount": 33.4,
+                            "currency": "GBP"
+                          },
+                          "totalTax": {
+                            "amount": 3.0,
+                            "currency": "GBP"
+                          },
+                          "customerLocale": "en-gb",
+                          "customerUrl": "http://myorder.com/customer#",
+                          "processedAt": "2015-03-04T20:45:03Z",
+                          "createdAt": "2015-03-04T20:45:01Z",
+                          "successfulFulfillments": []
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "orderId",
+                          "name",
+                          "orderNumber",
+                          "email",
+                          "phone",
+                          "shippingAddress",
+                          "statusUrl",
+                          "subtotalPrice",
+                          "totalPrice",
+                          "totalTax",
+                          "customerLocale",
+                          "customerUrl",
+                          "processedAt",
+                          "createdAt",
+                          "successfulFulfillments"
+                        ],
+                        "properties": {
+                          "orderId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "orderNumber": {
+                            "type": "integer"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "shippingAddress": {
+                            "x-data_model.model": "MailingAddress",
+                            "x-data_model.mode": "read",
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                              "address1",
+                              "longitude",
+                              "name",
+                              "countryCode",
+                              "lastName",
+                              "formatted",
+                              "company",
+                              "firstName",
+                              "country",
+                              "formattedArea",
+                              "province",
+                              "zip",
+                              "mailingAddressIdentifier",
+                              "provinceCode",
+                              "phone",
+                              "city",
+                              "address2",
+                              "latitude"
+                            ],
+                            "properties": {
+                              "address1": {
+                                "type": "string"
+                              },
+                              "longitude": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "countryCode": {
+                                "type": "string"
+                              },
+                              "lastName": {
+                                "type": "string"
+                              },
+                              "formatted": {
+                                "type": "string"
+                              },
+                              "company": {
+                                "type": "string"
+                              },
+                              "firstName": {
+                                "type": "string"
+                              },
+                              "country": {
+                                "type": "string"
+                              },
+                              "formattedArea": {
+                                "type": "string"
+                              },
+                              "province": {
+                                "type": "string"
+                              },
+                              "zip": {
+                                "type": "string"
+                              },
+                              "mailingAddressIdentifier": {
+                                "type": "string"
+                              },
+                              "provinceCode": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": "string"
+                              },
+                              "city": {
+                                "type": "string"
+                              },
+                              "address2": {
+                                "type": "string"
+                              },
+                              "latitude": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "statusUrl": {
+                            "type": "string"
+                          },
+                          "subtotalPrice": {
+                            "x-data_model.model": "Money",
+                            "x-data_model.mode": "read-write",
+                            "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                            "example": {
+                              "amount": 3.0,
+                              "currency": "EUR"
+                            },
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                              "amount",
+                              "currency"
+                            ],
+                            "properties": {
+                              "amount": {
+                                "type": "number",
+                                "minimum": 0.0
+                              },
+                              "currency": {
+                                "enum": [
+                                  "USD",
+                                  "EUR",
+                                  "GBP"
+                                ],
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "totalPrice": {
+                            "x-data_model.model": "Money",
+                            "x-data_model.mode": "read-write",
+                            "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                            "example": {
+                              "amount": 3.0,
+                              "currency": "EUR"
+                            },
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                              "amount",
+                              "currency"
+                            ],
+                            "properties": {
+                              "amount": {
+                                "type": "number",
+                                "minimum": 0.0
+                              },
+                              "currency": {
+                                "enum": [
+                                  "USD",
+                                  "EUR",
+                                  "GBP"
+                                ],
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "totalTax": {
+                            "x-data_model.model": "Money",
+                            "x-data_model.mode": "read-write",
+                            "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                            "example": {
+                              "amount": 3.0,
+                              "currency": "EUR"
+                            },
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                              "amount",
+                              "currency"
+                            ],
+                            "properties": {
+                              "amount": {
+                                "type": "number",
+                                "minimum": 0.0
+                              },
+                              "currency": {
+                                "enum": [
+                                  "USD",
+                                  "EUR",
+                                  "GBP"
+                                ],
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "customerLocale": {
+                            "type": "string"
+                          },
+                          "customerUrl": {
+                            "type": "string"
+                          },
+                          "processedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "successfulFulfillments": {
+                            "type": "array",
+                            "items": {
+                              "x-data_model.model": "Fulfillment",
+                              "x-data_model.mode": "read-write",
+                              "type": "object",
+                              "additionalProperties": true,
+                              "required": [
+                                "trackingCompany",
+                                "fulfillmentTrackingInfo"
+                              ],
+                              "properties": {
+                                "trackingCompany": {
+                                  "type": "string"
+                                },
+                                "fulfillmentTrackingInfo": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "required": [
+                                      "number",
+                                      "url"
+                                    ],
+                                    "properties": {
+                                      "number": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "presentmentCurrencyCode": {
+                        "type": "string"
+                      },
+                      "updateAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "taxExempt": {
+                        "type": "boolean"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "orderStatusUrl": {
+                        "type": "string"
+                      },
+                      "allowPartialAddresses": {
+                        "type": "boolean"
+                      },
+                      "totalTax": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "shippingAddress": {
+                        "x-data_model.model": "MailingAddress",
+                        "x-data_model.mode": "read",
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "address1",
+                          "longitude",
+                          "name",
+                          "countryCode",
+                          "lastName",
+                          "formatted",
+                          "company",
+                          "firstName",
+                          "country",
+                          "formattedArea",
+                          "province",
+                          "zip",
+                          "mailingAddressIdentifier",
+                          "provinceCode",
+                          "phone",
+                          "city",
+                          "address2",
+                          "latitude"
+                        ],
+                        "properties": {
+                          "address1": {
+                            "type": "string"
+                          },
+                          "longitude": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "countryCode": {
+                            "type": "string"
+                          },
+                          "lastName": {
+                            "type": "string"
+                          },
+                          "formatted": {
+                            "type": "string"
+                          },
+                          "company": {
+                            "type": "string"
+                          },
+                          "firstName": {
+                            "type": "string"
+                          },
+                          "country": {
+                            "type": "string"
+                          },
+                          "formattedArea": {
+                            "type": "string"
+                          },
+                          "province": {
+                            "type": "string"
+                          },
+                          "zip": {
+                            "type": "string"
+                          },
+                          "mailingAddressIdentifier": {
+                            "type": "string"
+                          },
+                          "provinceCode": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "city": {
+                            "type": "string"
+                          },
+                          "address2": {
+                            "type": "string"
+                          },
+                          "latitude": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "subtotalPrice": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "checkoutId": {
+                        "type": "string"
+                      },
+                      "ready": {
+                        "type": "boolean"
+                      },
+                      "note": {
+                        "type": "string"
+                      },
+                      "requiresShipping": {
+                        "type": "boolean"
+                      },
+                      "totalPrice": {
+                        "x-data_model.model": "Money",
+                        "x-data_model.mode": "read-write",
+                        "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                        "example": {
+                          "amount": 3.0,
+                          "currency": "EUR"
+                        },
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "amount",
+                          "currency"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0.0
+                          },
+                          "currency": {
+                            "enum": [
+                              "USD",
+                              "EUR",
+                              "GBP"
+                            ],
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "x-feature": "list"
+      },
+      "x-rest.resource": "Checkouts Collection",
+      "x-rest.resourceType": "collection",
+      "x-rest.hateoas": {
+        "members": {
+          "resource": "Checkout",
+          "method": "get"
+        }
+      }
+    },
+    "/checkouts/{checkoutId}": {
+      "parameters": [
+        {
+          "name": "checkoutId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "x-data_model.model": "Checkout",
+              "x-data_model.mode": "read",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "completed",
+                "taxesIncluded",
+                "webUrl",
+                "lineItems",
+                "order",
+                "presentmentCurrencyCode",
+                "updateAt",
+                "taxExempt",
+                "createdAt",
+                "orderStatusUrl",
+                "allowPartialAddresses",
+                "totalTax",
+                "email",
+                "shippingAddress",
+                "subtotalPrice",
+                "updatedAt",
+                "checkoutId",
+                "ready",
+                "requiresShipping",
+                "totalPrice"
+              ],
+              "properties": {
+                "completed": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "taxesIncluded": {
+                  "type": "boolean"
+                },
+                "webUrl": {
+                  "type": "string"
+                },
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "order": {
+                  "x-data_model.model": "Order",
+                  "x-data_model.mode": "read-write",
+                  "x-datamodel.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\",\n    \"data\": \"http://a.ml/vocabds/data#\"\n  },\n  \"@type\": \"sorg:Order\",\n  \"sorg:identifier\": \"7749303-fc\",\n  \"sorg:name\": \"sample order\",\n  \"sorg:orderNumber\": 88374,\n  \"sorg:email\": \"client@gmail.com\",\n  \"sorg:telephone\": \"+4455279303\",\n  \"sorg:deliveryAddress\": {\n    \"@type\": \"sorg:PostalAddress\",\n    \"sorg:identifier\": \"664hfj394h34h\",\n    \"sorg:streetAddress\": \"Finchley Road 453\",\n    \"data:address2\": \"Kings Court Flat C\",\n    \"sorg:addressLocality\": \"London\",\n    \"data:company\": \"none\",\n    \"sorg:addressCountry\": \"United Kingdom\",\n    \"data:countryCode\": \"UK\",\n    \"sorg:givenName\": \"John\",\n    \"sorg:familyName\": \"Wadus\",\n    \"sorg:telephone\": \"+4455279303\",\n    \"sorg:addressRegion\": \"Greater London\",\n    \"data:provinceCode\": \"uk_gl\",\n    \"data:formatted\": \"Finchley Road 453\\nKings Court Flat C\\nNW3 8CD\\nLondon\\nUK\",\n    \"data:formattedArea\": \"London, UK\",\n    \"sorg:latitude\": 51.5468,\n    \"sorg:longitude\": -0.1801,\n    \"sorg:name\": \"home address\",\n    \"sorg:postalCode\": \"NW3 8CD\"\n  },\n  \"sorg:url\": \"http://myorder.com/order#\",\n  \"sorg:subtotalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 30.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 33.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalTax\": {\n    \"@type\": \"sorg:MonetaryValue\",          \n    \"sorg:amount\": 3.0,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"data:customerLocale\": \"en-gb\",\n  \"data:customerUrl\": \"http://myorder.com/customer#\",\n  \"data:processedAt\": \"2015-03-04T20:45:03Z\",\n  \"sorg:orderDate\": \"2015-03-04T20:45:01Z\",\n  \"sorg:orderDelivery\": []\n}\n\n  \n",
+                  "example": {
+                    "orderId": "7749303-fc",
+                    "name": "sample order",
+                    "orderNumber": 88374,
+                    "email": "client@gmail.com",
+                    "phone": "+4455279303",
+                    "shippingAddress": {
+                      "mailingAddressIdentifier": "664hfj394h34h",
+                      "address1": "Finchley Road 453",
+                      "address2": "Kings Court Flat C",
+                      "city": "London",
+                      "company": "none",
+                      "country": "United Kingdom",
+                      "countryCode": "UK",
+                      "firstName": "John",
+                      "lastName": "Wadus",
+                      "phone": "+4455279303",
+                      "province": "Greater London",
+                      "provinceCode": "uk_gl",
+                      "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
+                      "formattedArea": "London, UK\n",
+                      "latitude": 51.5468,
+                      "longitude": -0.1801,
+                      "name": "home address",
+                      "zip": "NW3 8CD"
+                    },
+                    "statusUrl": "http://myorder.com/order#",
+                    "subtotalPrice": {
+                      "amount": 30.4,
+                      "currency": "GBP"
+                    },
+                    "totalPrice": {
+                      "amount": 33.4,
+                      "currency": "GBP"
+                    },
+                    "totalTax": {
+                      "amount": 3.0,
+                      "currency": "GBP"
+                    },
+                    "customerLocale": "en-gb",
+                    "customerUrl": "http://myorder.com/customer#",
+                    "processedAt": "2015-03-04T20:45:03Z",
+                    "createdAt": "2015-03-04T20:45:01Z",
+                    "successfulFulfillments": []
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "orderId",
+                    "name",
+                    "orderNumber",
+                    "email",
+                    "phone",
+                    "shippingAddress",
+                    "statusUrl",
+                    "subtotalPrice",
+                    "totalPrice",
+                    "totalTax",
+                    "customerLocale",
+                    "customerUrl",
+                    "processedAt",
+                    "createdAt",
+                    "successfulFulfillments"
+                  ],
+                  "properties": {
+                    "orderId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "orderNumber": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "shippingAddress": {
+                      "x-data_model.model": "MailingAddress",
+                      "x-data_model.mode": "read",
+                      "type": "object",
+                      "additionalProperties": true,
+                      "required": [
+                        "address1",
+                        "longitude",
+                        "name",
+                        "countryCode",
+                        "lastName",
+                        "formatted",
+                        "company",
+                        "firstName",
+                        "country",
+                        "formattedArea",
+                        "province",
+                        "zip",
+                        "mailingAddressIdentifier",
+                        "provinceCode",
+                        "phone",
+                        "city",
+                        "address2",
+                        "latitude"
+                      ],
+                      "properties": {
+                        "address1": {
+                          "type": "string"
+                        },
+                        "longitude": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "countryCode": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "formatted": {
+                          "type": "string"
+                        },
+                        "company": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "formattedArea": {
+                          "type": "string"
+                        },
+                        "province": {
+                          "type": "string"
+                        },
+                        "zip": {
+                          "type": "string"
+                        },
+                        "mailingAddressIdentifier": {
+                          "type": "string"
+                        },
+                        "provinceCode": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "address2": {
+                          "type": "string"
+                        },
+                        "latitude": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "statusUrl": {
+                      "type": "string"
+                    },
+                    "subtotalPrice": {
+                      "x-data_model.model": "Money",
+                      "x-data_model.mode": "read-write",
+                      "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                      "example": {
+                        "amount": 3.0,
+                        "currency": "EUR"
+                      },
+                      "type": "object",
+                      "additionalProperties": true,
+                      "required": [
+                        "amount",
+                        "currency"
+                      ],
+                      "properties": {
+                        "amount": {
+                          "type": "number",
+                          "minimum": 0.0
+                        },
+                        "currency": {
+                          "enum": [
+                            "USD",
+                            "EUR",
+                            "GBP"
+                          ],
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "totalPrice": {
+                      "x-data_model.model": "Money",
+                      "x-data_model.mode": "read-write",
+                      "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                      "example": {
+                        "amount": 3.0,
+                        "currency": "EUR"
+                      },
+                      "type": "object",
+                      "additionalProperties": true,
+                      "required": [
+                        "amount",
+                        "currency"
+                      ],
+                      "properties": {
+                        "amount": {
+                          "type": "number",
+                          "minimum": 0.0
+                        },
+                        "currency": {
+                          "enum": [
+                            "USD",
+                            "EUR",
+                            "GBP"
+                          ],
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "totalTax": {
+                      "x-data_model.model": "Money",
+                      "x-data_model.mode": "read-write",
+                      "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                      "example": {
+                        "amount": 3.0,
+                        "currency": "EUR"
+                      },
+                      "type": "object",
+                      "additionalProperties": true,
+                      "required": [
+                        "amount",
+                        "currency"
+                      ],
+                      "properties": {
+                        "amount": {
+                          "type": "number",
+                          "minimum": 0.0
+                        },
+                        "currency": {
+                          "enum": [
+                            "USD",
+                            "EUR",
+                            "GBP"
+                          ],
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "customerLocale": {
+                      "type": "string"
+                    },
+                    "customerUrl": {
+                      "type": "string"
+                    },
+                    "processedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "successfulFulfillments": {
+                      "type": "array",
+                      "items": {
+                        "x-data_model.model": "Fulfillment",
+                        "x-data_model.mode": "read-write",
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "trackingCompany",
+                          "fulfillmentTrackingInfo"
+                        ],
+                        "properties": {
+                          "trackingCompany": {
+                            "type": "string"
+                          },
+                          "fulfillmentTrackingInfo": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": true,
+                              "required": [
+                                "number",
+                                "url"
+                              ],
+                              "properties": {
+                                "number": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "presentmentCurrencyCode": {
+                  "type": "string"
+                },
+                "updateAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "taxExempt": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "orderStatusUrl": {
+                  "type": "string"
+                },
+                "allowPartialAddresses": {
+                  "type": "boolean"
+                },
+                "totalTax": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                },
+                "email": {
+                  "type": "string"
+                },
+                "shippingAddress": {
+                  "x-data_model.model": "MailingAddress",
+                  "x-data_model.mode": "read",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "address1",
+                    "longitude",
+                    "name",
+                    "countryCode",
+                    "lastName",
+                    "formatted",
+                    "company",
+                    "firstName",
+                    "country",
+                    "formattedArea",
+                    "province",
+                    "zip",
+                    "mailingAddressIdentifier",
+                    "provinceCode",
+                    "phone",
+                    "city",
+                    "address2",
+                    "latitude"
+                  ],
+                  "properties": {
+                    "address1": {
+                      "type": "string"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "countryCode": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "formatted": {
+                      "type": "string"
+                    },
+                    "company": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "formattedArea": {
+                      "type": "string"
+                    },
+                    "province": {
+                      "type": "string"
+                    },
+                    "zip": {
+                      "type": "string"
+                    },
+                    "mailingAddressIdentifier": {
+                      "type": "string"
+                    },
+                    "provinceCode": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "address2": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "subtotalPrice": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "checkoutId": {
+                  "type": "string"
+                },
+                "ready": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "requiresShipping": {
+                  "type": "boolean"
+                },
+                "totalPrice": {
+                  "x-data_model.model": "Money",
+                  "x-data_model.mode": "read-write",
+                  "x-data_model.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\"\n  },\n  \"@type\": \"sorg:MonetaryValue\",\n  \"sorg:amount\": 3.0,\n  \"sorg:currency\": \"EUR\"\n}\n",
+                  "example": {
+                    "amount": 3.0,
+                    "currency": "EUR"
+                  },
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "amount",
+                    "currency"
+                  ],
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0.0
+                    },
+                    "currency": {
+                      "enum": [
+                        "USD",
+                        "EUR",
+                        "GBP"
+                      ],
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-feature": "read"
+      },
+      "put": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-data_model.context": "../../data_model/checkouts/schema.yaml",
+              "x-schema.model": "Checkout",
+              "x-schema.mode": "write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "shippingLine"
+              ],
+              "properties": {
+                "lineItems": {
+                  "type": "array",
+                  "items": {
+                    "x-data_model.model": "CheckoutLineItem",
+                    "x-data_model.mode": "read-write",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "variantId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "variantId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "shippingLine": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "handle"
+                  ],
+                  "properties": {
+                    "handle": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "update"
+      },
+      "x-rest.resource": "Checkout",
+      "x-rest.resourceType": "individual",
+      "x-rest.hateoas": {
+        "availableShippingRates": {
+          "resource": "ShippingRates",
+          "method": "get"
+        },
+        "selectShippingLine": {
+          "resource": "ShippingLine",
+          "method": "put"
+        },
+        "pay": {
+          "resource": "Checkout Payment",
+          "method": "post"
+        },
+        "order": {
+          "resource": "Order",
+          "method": "get"
+        }
+      }
+    },
+    "/checkouts/{checkoutId}/shipping_rates": {
+      "parameters": [
+        {
+          "name": "checkoutId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "202": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              },
+              "retry-after": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "subscribe"
+      },
+      "x-rest.resource": "ShippingRates",
+      "x-rest.resourceType": "collection"
+    },
+    "/checkouts/{checkoutId}/shippingLine": {
+      "parameters": [
+        {
+          "name": "checkoutId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "x-data_model.model": "ShippingRate",
+              "x-data_model.mode": "read-write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "handle",
+                "price",
+                "title"
+              ],
+              "properties": {
+                "handle": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-feature": "read"
+      },
+      "put": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-data_model.model": "ShippingRate",
+              "x-data_model.mode": "read-write",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "handle"
+              ],
+              "properties": {
+                "handle": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "create"
+      },
+      "x-rest.resource": "ShippingLine",
+      "x-rest.resourceType": "collection"
+    },
+    "/checkouts/{checkoutId}/payments": {
+      "parameters": [
+        {
+          "name": "checkoutId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "202": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              },
+              "retry-after": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "publish"
+      },
+      "get": {
+        "responses": {
+          "202": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              },
+              "retry-after": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "subscribe"
+      },
+      "x-rest.resource": "Checkout Payment",
+      "x-rest.resourceType": "individual"
+    },
+    "/checkouts/{checkoutId}/order": {
+      "parameters": [
+        {
+          "name": "checkoutId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "202": {
+            "description": "",
+            "headers": {
+              "location": {
+                "type": "string"
+              },
+              "retry-after": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-feature": "subscribe"
+      },
+      "x-rest.resource": "Order",
+      "x-rest.resourceType": "individual"
+    }
+  },
+  "definitions": {
+    "CheckoutUpdate": {
+      "x-data_model.context": "../../data_model/checkouts/schema.yaml",
+      "x-schema.model": "Checkout",
+      "x-schema.mode": "write",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "shippingLine"
+      ],
+      "properties": {
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "x-data_model.model": "CheckoutLineItem",
+            "x-data_model.mode": "read-write",
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "variantId",
+              "quantity"
+            ],
+            "properties": {
+              "variantId": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "shippingLine": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "handle"
+          ],
+          "properties": {
+            "handle": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-amf-uses": {
+    "rest": "../rest.raml",
+    "data_model": "../data_model.yaml",
+    "schema": "./checkouts_schema.yaml"
+  }
+}
+
