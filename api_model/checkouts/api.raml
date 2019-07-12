@@ -35,7 +35,6 @@ types:
       resource: ShoppingCart
       method: get
 
-      
 /shopping_carts/{shoppingcartId}:
   (rest.resource): ShoppingCart  
   (rest.resourceType): individual
@@ -49,7 +48,6 @@ types:
     checkout:
       resource: Checkouts Collection
       method: post
-
       
 /checkouts:
   (rest.resource): Checkouts Collection  
@@ -105,7 +103,6 @@ types:
     is: [ rest.publish: {schema: schema.PaymentWrite} ]
   get:
     is: [ rest.subscribe: {schema: schema.PaymentRead} ]
-
 
 /checkouts/{checkoutId}/order:
   (rest.resource): Order

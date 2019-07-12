@@ -6,7 +6,6 @@ uses:
 (data_model.context): ../../data_model/checkouts/schema.yaml
 
 types:
-
   Money:
     (data_model.model): Money
     (data_model.mode): read-write
@@ -32,14 +31,12 @@ types:
         "sorg:amount": 3.0,
         "sorg:currency": "EUR"
       }
-
   ShoppingCartWrite:
     (data_model.model): ShoppingCart
     (data_model.mode): write
     properties:
       presentmentCurrencyCode: string
       lineItems?: CheckoutLineItem[]
-
   ShoppingCartRead:
     (data_model.model): ShoppingCart
     (data_model.mode): read
@@ -49,14 +46,12 @@ types:
       subtotalPrice: Money
       totalPrice: Money
       totalTax: Money
-
   CheckoutLineItem:
     (data_model.model): CheckoutLineItem
     (data_model.mode): read-write
     properties:
       variantId: string
       quantity: integer
-      
   CheckoutCreate:
     (data_model.model): Checkout
     (data_model.mode): write
@@ -69,7 +64,6 @@ types:
         CheckoutLineItem[]
       shippingAddress:
         MailingAddressRead
-
   CheckoutRead:
     (data_model.model): Checkout
     (data_model.mode): read
@@ -92,7 +86,6 @@ types:
       completed: datetime
       lineItems:
         CheckoutLineItem[]
-    
   MailingAddressWrite:
     (data_model.model): MailingAddress
     (data_model.mode): write
@@ -107,7 +100,6 @@ types:
       phone: string
       province: string
       zip: string
-
   MailingAddressRead:
     (data_model.model): MailingAddress
     (data_model.mode): read
@@ -129,13 +121,11 @@ types:
       handle: string
       price: string
       title: string
-
   ShippingRateWrite:
     (data_model.model): ShippingRate
     (data_model.mode): read-write
     properties:
       handle: string      
-
   PaymentWrite:
     (data_model.model): Payment
     (data_model.mode): write
@@ -144,14 +134,12 @@ types:
       currency: string
       checkoutId: string
       creditCardToken: string
-
   PaymentRead:
     (data_model.model): Payment
     (data_model.mode): write
     type: PaymentWrite
     properties:
       paymentId: string
-
   Order:
     (data_model.model): Order
     (data_model.mode): read-write
@@ -273,9 +261,6 @@ types:
         "sorg:orderDate": "2015-03-04T20:45:01Z",
         "sorg:orderDelivery": []
       }
-    
-        
-
   Fulfillment:
     (data_model.model): Fulfillment
     (data_model.mode): read-write
@@ -286,4 +271,3 @@ types:
           properties:
             number: string
             url: string
-      

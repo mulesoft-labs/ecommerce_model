@@ -5,7 +5,7 @@ types:
     properties:
       total: integer
       members: any[]
-      
+
 annotationTypes:
   (resourceType):
     type: string
@@ -24,12 +24,10 @@ annotationTypes:
       - subscribe
   (resource):
     type: string
-
   (hateoas):
     type: any
       
 traits:
-  
   list:
     (feature): list
     queryParameters:
@@ -43,22 +41,18 @@ traits:
             members:
               type: array
               items: <<schema>>  
-
   create:
     (feature): create
     body: <<schema>>
     responses:
       201:
         headers:
-          location:
-          
+          location:      
   read:
     (feature): read
     responses:
       200:
         body: <<schema>>
-
-
   update:
     (feature): update
     body: <<schema>>
@@ -66,12 +60,10 @@ traits:
       200:
         headers:
           location:
-
   destroy:
     (feature): destroy
     responses:
       200:
-
   publish:
     (feature): publish
     responses:
@@ -79,7 +71,6 @@ traits:
         headers:
           location:
           retry-after:
-
   subscribe:
     (feature): subscribe
     responses:
@@ -87,4 +78,3 @@ traits:
         headers:
           location:      
           retry-after:
-      

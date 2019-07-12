@@ -14,7 +14,6 @@ channels:
         schemaFormat: application/raml+yaml
         payload:
           $ref: ./schema.yaml#/types/ShippingRateRead
-
   /checkouts/{checkoutId}/payments:
     subscribe:
       message:
@@ -26,7 +25,6 @@ channels:
         schemaFormat: application/raml+yaml
         payload:
           $ref: ./schema.yaml#/types/PaymentWrite
-
   /checkouts/{checkoutId}/order:
     subscribe:
       message:
