@@ -4,7 +4,7 @@
     "title": "Checkouts API",
     "version": "1.0"
   },
-  "host": "ecommerce.demo.com",
+  "host": "demo.ecommerce.com",
   "basePath": "/checkouts",
   "schemes": [
     "https"
@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/shoping_carts": {
+    "/shopping_carts": {
       "post": {
         "parameters": [
           {
@@ -705,49 +705,49 @@
                         "x-data_model.mode": "read-write",
                         "x-datamodel.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\",\n    \"data\": \"http://a.ml/vocabds/data#\"\n  },\n  \"@type\": \"sorg:Order\",\n  \"sorg:identifier\": \"7749303-fc\",\n  \"sorg:name\": \"sample order\",\n  \"sorg:orderNumber\": 88374,\n  \"sorg:email\": \"client@gmail.com\",\n  \"sorg:telephone\": \"+4455279303\",\n  \"sorg:deliveryAddress\": {\n    \"@type\": \"sorg:PostalAddress\",\n    \"sorg:identifier\": \"664hfj394h34h\",\n    \"sorg:streetAddress\": \"Finchley Road 453\",\n    \"data:address2\": \"Kings Court Flat C\",\n    \"sorg:addressLocality\": \"London\",\n    \"data:company\": \"none\",\n    \"sorg:addressCountry\": \"United Kingdom\",\n    \"data:countryCode\": \"UK\",\n    \"sorg:givenName\": \"John\",\n    \"sorg:familyName\": \"Wadus\",\n    \"sorg:telephone\": \"+4455279303\",\n    \"sorg:addressRegion\": \"Greater London\",\n    \"data:provinceCode\": \"uk_gl\",\n    \"data:formatted\": \"Finchley Road 453\\nKings Court Flat C\\nNW3 8CD\\nLondon\\nUK\",\n    \"data:formattedArea\": \"London, UK\",\n    \"sorg:latitude\": 51.5468,\n    \"sorg:longitude\": -0.1801,\n    \"sorg:name\": \"home address\",\n    \"sorg:postalCode\": \"NW3 8CD\"\n  },\n  \"sorg:url\": \"http://myorder.com/order#\",\n  \"sorg:subtotalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 30.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 33.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalTax\": {\n    \"@type\": \"sorg:MonetaryValue\",          \n    \"sorg:amount\": 3.0,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"data:customerLocale\": \"en-gb\",\n  \"data:customerUrl\": \"http://myorder.com/customer#\",\n  \"data:processedAt\": \"2015-03-04T20:45:03Z\",\n  \"sorg:orderDate\": \"2015-03-04T20:45:01Z\",\n  \"sorg:orderDelivery\": []\n}\n\n  \n",
                         "example": {
-                          "orderId": "7749303-fc",
-                          "name": "sample order",
-                          "orderNumber": 88374,
-                          "email": "client@gmail.com",
-                          "phone": "+4455279303",
                           "shippingAddress": {
-                            "mailingAddressIdentifier": "664hfj394h34h",
-                            "address1": "Finchley Road 453",
-                            "address2": "Kings Court Flat C",
-                            "city": "London",
                             "company": "none",
-                            "country": "United Kingdom",
+                            "province": "Greater London",
+                            "phone": "+4455279303",
+                            "city": "London",
+                            "formattedArea": "London, UK\n",
+                            "lastName": "Wadus",
+                            "address1": "Finchley Road 453",
+                            "name": "home address",
+                            "address2": "Kings Court Flat C",
+                            "provinceCode": "uk_gl",
+                            "longitude": -0.1801,
+                            "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
                             "countryCode": "UK",
                             "firstName": "John",
-                            "lastName": "Wadus",
-                            "phone": "+4455279303",
-                            "province": "Greater London",
-                            "provinceCode": "uk_gl",
-                            "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
-                            "formattedArea": "London, UK\n",
+                            "country": "United Kingdom",
                             "latitude": 51.5468,
-                            "longitude": -0.1801,
-                            "name": "home address",
-                            "zip": "NW3 8CD"
+                            "zip": "NW3 8CD",
+                            "mailingAddressIdentifier": "664hfj394h34h"
                           },
-                          "statusUrl": "http://myorder.com/order#",
+                          "email": "client@gmail.com",
                           "subtotalPrice": {
                             "amount": 30.4,
                             "currency": "GBP"
                           },
+                          "orderNumber": 88374,
                           "totalPrice": {
                             "amount": 33.4,
                             "currency": "GBP"
                           },
+                          "processedAt": "2015-03-04T20:45:03Z",
+                          "customerLocale": "en-gb",
+                          "successfulFulfillments": [],
+                          "createdAt": "2015-03-04T20:45:01Z",
                           "totalTax": {
                             "amount": 3.0,
                             "currency": "GBP"
                           },
-                          "customerLocale": "en-gb",
+                          "orderId": "7749303-fc",
                           "customerUrl": "http://myorder.com/customer#",
-                          "processedAt": "2015-03-04T20:45:03Z",
-                          "createdAt": "2015-03-04T20:45:01Z",
-                          "successfulFulfillments": []
+                          "name": "sample order",
+                          "statusUrl": "http://myorder.com/order#",
+                          "phone": "+4455279303"
                         },
                         "type": "object",
                         "additionalProperties": true,
@@ -1316,49 +1316,49 @@
                   "x-data_model.mode": "read-write",
                   "x-datamodel.example": "{\n  \"@context\": {\n    \"sorg\": \"http://schema.org/\",\n    \"data\": \"http://a.ml/vocabds/data#\"\n  },\n  \"@type\": \"sorg:Order\",\n  \"sorg:identifier\": \"7749303-fc\",\n  \"sorg:name\": \"sample order\",\n  \"sorg:orderNumber\": 88374,\n  \"sorg:email\": \"client@gmail.com\",\n  \"sorg:telephone\": \"+4455279303\",\n  \"sorg:deliveryAddress\": {\n    \"@type\": \"sorg:PostalAddress\",\n    \"sorg:identifier\": \"664hfj394h34h\",\n    \"sorg:streetAddress\": \"Finchley Road 453\",\n    \"data:address2\": \"Kings Court Flat C\",\n    \"sorg:addressLocality\": \"London\",\n    \"data:company\": \"none\",\n    \"sorg:addressCountry\": \"United Kingdom\",\n    \"data:countryCode\": \"UK\",\n    \"sorg:givenName\": \"John\",\n    \"sorg:familyName\": \"Wadus\",\n    \"sorg:telephone\": \"+4455279303\",\n    \"sorg:addressRegion\": \"Greater London\",\n    \"data:provinceCode\": \"uk_gl\",\n    \"data:formatted\": \"Finchley Road 453\\nKings Court Flat C\\nNW3 8CD\\nLondon\\nUK\",\n    \"data:formattedArea\": \"London, UK\",\n    \"sorg:latitude\": 51.5468,\n    \"sorg:longitude\": -0.1801,\n    \"sorg:name\": \"home address\",\n    \"sorg:postalCode\": \"NW3 8CD\"\n  },\n  \"sorg:url\": \"http://myorder.com/order#\",\n  \"sorg:subtotalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 30.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalPrice\": {\n    \"@type\": \"sorg:MonetaryValue\",\n    \"sorg:amount\": 33.4,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"sorg:totalTax\": {\n    \"@type\": \"sorg:MonetaryValue\",          \n    \"sorg:amount\": 3.0,\n    \"sorg:currency\": \"GBP\"\n  },\n  \"data:customerLocale\": \"en-gb\",\n  \"data:customerUrl\": \"http://myorder.com/customer#\",\n  \"data:processedAt\": \"2015-03-04T20:45:03Z\",\n  \"sorg:orderDate\": \"2015-03-04T20:45:01Z\",\n  \"sorg:orderDelivery\": []\n}\n\n  \n",
                   "example": {
-                    "orderId": "7749303-fc",
-                    "name": "sample order",
-                    "orderNumber": 88374,
-                    "email": "client@gmail.com",
-                    "phone": "+4455279303",
                     "shippingAddress": {
-                      "mailingAddressIdentifier": "664hfj394h34h",
-                      "address1": "Finchley Road 453",
-                      "address2": "Kings Court Flat C",
-                      "city": "London",
                       "company": "none",
-                      "country": "United Kingdom",
+                      "province": "Greater London",
+                      "phone": "+4455279303",
+                      "city": "London",
+                      "formattedArea": "London, UK\n",
+                      "lastName": "Wadus",
+                      "address1": "Finchley Road 453",
+                      "name": "home address",
+                      "address2": "Kings Court Flat C",
+                      "provinceCode": "uk_gl",
+                      "longitude": -0.1801,
+                      "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
                       "countryCode": "UK",
                       "firstName": "John",
-                      "lastName": "Wadus",
-                      "phone": "+4455279303",
-                      "province": "Greater London",
-                      "provinceCode": "uk_gl",
-                      "formatted": "Finchley Road 453\nKings Court Flat C\nNW3 8CD\nLondon\nUK\n",
-                      "formattedArea": "London, UK\n",
+                      "country": "United Kingdom",
                       "latitude": 51.5468,
-                      "longitude": -0.1801,
-                      "name": "home address",
-                      "zip": "NW3 8CD"
+                      "zip": "NW3 8CD",
+                      "mailingAddressIdentifier": "664hfj394h34h"
                     },
-                    "statusUrl": "http://myorder.com/order#",
+                    "email": "client@gmail.com",
                     "subtotalPrice": {
                       "amount": 30.4,
                       "currency": "GBP"
                     },
+                    "orderNumber": 88374,
                     "totalPrice": {
                       "amount": 33.4,
                       "currency": "GBP"
                     },
+                    "processedAt": "2015-03-04T20:45:03Z",
+                    "customerLocale": "en-gb",
+                    "successfulFulfillments": [],
+                    "createdAt": "2015-03-04T20:45:01Z",
                     "totalTax": {
                       "amount": 3.0,
                       "currency": "GBP"
                     },
-                    "customerLocale": "en-gb",
+                    "orderId": "7749303-fc",
                     "customerUrl": "http://myorder.com/customer#",
-                    "processedAt": "2015-03-04T20:45:03Z",
-                    "createdAt": "2015-03-04T20:45:01Z",
-                    "successfulFulfillments": []
+                    "name": "sample order",
+                    "statusUrl": "http://myorder.com/order#",
+                    "phone": "+4455279303"
                   },
                   "type": "object",
                   "additionalProperties": true,
@@ -1948,7 +1948,7 @@
       "x-rest.resource": "ShippingRates",
       "x-rest.resourceType": "collection"
     },
-    "/checkouts/{checkoutId}/shippingLine": {
+    "/checkouts/{checkoutId}/shipping_line": {
       "parameters": [
         {
           "name": "checkoutId",
@@ -2146,9 +2146,9 @@
     }
   },
   "x-amf-uses": {
-    "rest": "../rest.raml",
-    "data_model": "../data_model.yaml",
-    "schema": "./checkouts_schema.yaml"
+    "rest": "../dependencies/rest.raml",
+    "data_model": "../dependencies/data_model.yaml",
+    "schema": "./schema.raml"
   }
 }
 

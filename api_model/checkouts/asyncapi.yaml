@@ -13,23 +13,23 @@ channels:
       message:
         schemaFormat: application/raml+yaml
         payload:
-          $ref: ./checkouts_schema.yaml#/types/ShippingRateRead
+          $ref: ./schema.yaml#/types/ShippingRateRead
 
   /checkouts/{checkoutId}/payments:
     subscribe:
       message:
         schemaFormat: application/raml+yaml
         payload:
-          $ref: ./checkouts_schema.yaml#/types/PaymentRead
+          $ref: ./schema.yaml#/types/PaymentRead
     publish:
       message:
         schemaFormat: application/raml+yaml
         payload:
-          $ref: ./checkouts_schema.yaml#/types/PaymentWrite
+          $ref: ./schema.yaml#/types/PaymentWrite
 
   /checkouts/{checkoutId}/order:
     subscribe:
       message:
         schemaFormat: application/raml+yaml
         payload:
-          $ref: ./checkouts_schema.yaml#/types/Order                              
+          $ref: ./schema.yaml#/types/Order                              
