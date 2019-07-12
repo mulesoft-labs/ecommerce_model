@@ -3,16 +3,13 @@
 title: Checkouts API
 version: 1.0
 baseUri: https://demo.ecommerce.com/checkouts
-
 mediaType: application/json
 
 uses:
   rest: ../rest.raml
   data_model: ../data_model.yaml  
   schema: ./checkouts_schema.yaml
-
 types:
-
   # This is ad-hoc, it can be generated when binding the schema to the resource
   # in the GUI tool.
   # It is still possible to customize the schemas from tehd ata model.
@@ -26,7 +23,7 @@ types:
         properties:
           handle: string                 
 
-/shoping_carts:
+/shopping_carts:
   (rest.resource): ShoppingCart Collection  
   (rest.resourceType): collection
   post:
@@ -65,8 +62,7 @@ types:
     members:
       resource: Checkout
       method: get
-
-      
+ 
 /checkouts/{checkoutId}:
   (rest.resource): Checkout
   (rest.resourceType): individual
@@ -87,16 +83,14 @@ types:
     order:
       resource: Order
       method: get
-    
 
 /checkouts/{checkoutId}/shipping_rates:
   (rest.resource): ShippingRates
   (rest.resourceType): collection
   get:
     is: [ rest.subscribe: {schema: schema.ShippingRateRead} ]
-    
 
-/checkouts/{checkoutId}/shippingLine:
+/checkouts/{checkoutId}/shipping_line:
   (rest.resource): ShippingLine
   (rest.resourceType): collection
   get:
@@ -104,7 +98,6 @@ types:
   put:
     is: [ rest.create: {schema: schema.ShippingRateWrite} ]
 
-    
 /checkouts/{checkoutId}/payments:
   (rest.resource): Checkout Payment
   (rest.resourceType): individual
