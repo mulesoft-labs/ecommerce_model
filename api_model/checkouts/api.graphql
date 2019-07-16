@@ -1,0 +1,140 @@
+type Query {
+    checkouts: CheckoutsCollection
+    shopping_carts: ShoppingCartsCollection
+}
+
+type Mutation {
+    checkout(lineItems: [LineItemWrite]): Checkout
+    pay(payment: PaymentWrite): Payment
+}
+
+type ShoppingCartsCollection {
+    total: Int!
+    members: [ShoppingCart]
+    shoppingcart_by_id(shoppingcartId: String!): ShoppingCart
+}
+
+type ShoppingCart {
+    allowPartialAddresses: Boolean!
+    shoppingcartId: String!
+    lineItems: [LineItem]
+    subtotalPrice: Money
+    totalTax: Money
+    totalPrice: Money
+}
+
+type CheckoutsCollection {
+    total: Int!
+    members: [Checkout]
+    checkouts_by_checkoutId(checkoutId: String!): Checkout
+}
+
+type Checkout {
+    completed: DateTime!
+    taxesIncluded: Boolean!
+    webUrl: String!
+    presentmentCurrencyCode: String!
+    updateAt: DateTime!
+    taxExempt: Boolean!
+    createdAt: DateTime!
+    orderStatusUrl: String!
+    allowPartialAddresses: Boolean!
+    email: String!
+    updatedAt: DateTime!
+    checkoutId: String!
+    ready: Boolean!
+    note: String
+    requiresShipping: Boolean!
+    lineItems: [LineItem]
+    subtotalPrice: Money
+    totalPrice: Money
+    order: Order
+    totalTax: TotalTax
+    shippingAddress: ShippingAddress
+}
+
+type Order {
+    orderId: String!
+    name: String!
+    orderNumber: Int!
+    email: String!
+    phone: String!
+    statusUrl: String!
+    customerLocale: String!
+    customerUrl: String!
+    processedAt: DateTime!
+    createdAt: DateTime!
+    subtotalPrice: Money
+    totalPrice: Money
+    successfulFulfillments: [SuccessfulFulfillmentsItems]
+    totalTax: TotalTax
+    shippingAddress: ShippingAddress
+}
+
+type ShippingAddress {
+    address1: String!
+    longitude: String!
+    name: String!
+    countryCode: String!
+    lastName: String!
+    formatted: String!
+    company: String!
+    firstName: String!
+    country: String!
+    formattedArea: String!
+    province: String!
+    zip: String!
+    mailingAddressIdentifier: String!
+    provinceCode: String!
+    phone: String!
+    city: String!
+    address2: String!
+    latitude: String!
+}
+
+type TotalTax {
+    amount: String!
+    currency: currency
+}
+
+type SuccessfulFulfillmentsItems {
+    trackingCompany: String!
+    fulfillmentTrackingInfo: [FulfillmentTrackingInfoItems]
+}
+
+type FulfillmentTrackingInfoItems {
+    number: String!
+    url: String!
+}
+
+type Money {
+    amount: String!
+    currency: String!
+}
+
+enum currency {
+    USD
+    EUR
+    GBP
+}
+
+type LineItem {
+    variantId: String!
+    quantity: Int!
+}
+
+type Payment {
+    paymentId: String
+}
+
+input LineItemWrite {
+    variantId: String!
+    quantity: Int!
+}
+
+input PaymentWrite {
+    amount: Float
+    currency: String
+    checkoutId: String
+    creditCardToken: String
+}
