@@ -16,8 +16,8 @@ types:
   # It is still possible to customize the schemas from the data model.
   CheckoutUpdate:
     (data_model.context): ../../data_model/checkouts/schema.yaml
-    (schema.model): Checkout
-    (schema.mode): write
+    (data_model.model): Checkout
+    (data_model.mode): write
     properties:
       lineItems?: schema.CheckoutLineItem[]
       shippingLine:

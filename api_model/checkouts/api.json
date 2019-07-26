@@ -2101,8 +2101,8 @@
   "definitions": {
     "CheckoutUpdate": {
       "x-data_model.context": "../../data_model/checkouts/schema.yaml",
-      "x-schema.model": "Checkout",
-      "x-schema.mode": "write",
+      "x-data_model.model": "Checkout",
+      "x-data_model.mode": "write",
       "type": "object",
       "additionalProperties": true,
       "required": [
